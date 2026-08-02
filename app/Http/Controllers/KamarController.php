@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kamar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class KamarController extends Controller
 {
@@ -22,13 +23,32 @@ class KamarController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:20',
-            'harga' => 'required|numeric',
+            'harga' => 'required|numeric|min:0',
             'fasilitas' => 'nullable|string',
             'deskripsi' => 'nullable|string',
-            'status' => 'required|in:Tersedia,Penuh,Maintenance'
+            'status' => 'required|in:Tersedia,Penuh,Maintenance',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        Kamar::create($request->all());
+        $data = $request->all();
+
+        // Upload gambar
+        if ($request->hasFile('gambar')) {
+            $image = $request->file('gambar');
+            $filename = Str::slug($request->nama) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            
+            // Pindahkan gambar tanpa resize (cara sederhana)
+            $image->move(storage_path('app/public/kamar/'), $filename);
+            
+            // Atau jika ingin resize, gunakan ini:
+            // $img = \Intervention\Image\ImageManager::gd()->read($image->getRealPath());
+            // $img->resize(600, 400);
+            // $img->save(storage_path('app/public/kamar/' . $filename));
+            
+            $data['gambar'] = $filename;
+        }
+
+        Kamar::create($data);
         return redirect()->route('admin.kamar.index')->with('success', 'Kamar berhasil ditambahkan!');
     }
 
@@ -41,18 +61,47 @@ class KamarController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:20',
-            'harga' => 'required|numeric',
+            'harga' => 'required|numeric|min:0',
             'fasilitas' => 'nullable|string',
             'deskripsi' => 'nullable|string',
-            'status' => 'required|in:Tersedia,Penuh,Maintenance'
+            'status' => 'required|in:Tersedia,Penuh,Maintenance',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $kamar->update($request->all());
+        $data = $request->all();
+
+        // Upload gambar baru
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama
+            if ($kamar->gambar && file_exists(storage_path('app/public/kamar/' . $kamar->gambar))) {
+                unlink(storage_path('app/public/kamar/' . $kamar->gambar));
+            }
+
+            $image = $request->file('gambar');
+            $filename = Str::slug($request->nama) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            
+            // Pindahkan gambar tanpa resize
+            $image->move(storage_path('app/public/kamar/'), $filename);
+            
+            // Atau jika ingin resize:
+            // $img = \Intervention\Image\ImageManager::gd()->read($image->getRealPath());
+            // $img->resize(600, 400);
+            // $img->save(storage_path('app/public/kamar/' . $filename));
+            
+            $data['gambar'] = $filename;
+        }
+
+        $kamar->update($data);
         return redirect()->route('admin.kamar.index')->with('success', 'Kamar berhasil diupdate!');
     }
 
     public function destroy(Kamar $kamar)
     {
+        // Hapus gambar
+        if ($kamar->gambar && file_exists(storage_path('app/public/kamar/' . $kamar->gambar))) {
+            unlink(storage_path('app/public/kamar/' . $kamar->gambar));
+        }
+        
         $kamar->delete();
         return redirect()->route('admin.kamar.index')->with('success', 'Kamar berhasil dihapus!');
     }

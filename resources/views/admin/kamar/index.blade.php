@@ -13,12 +13,24 @@
     </div>
     <table>
         <thead>
-            <tr><th>No.</th><th>Nama</th><th>Harga</th><th>Fasilitas</th><th>Status</th><th>Aksi</th></tr>
+            <tr>
+                <th>No.</th>
+                <th>Gambar</th>
+                <th>Nama</th>
+                <th>Harga</th>
+                <th>Fasilitas</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
         </thead>
         <tbody>
             @forelse($kamars as $kamar)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td>
+                    <img src="{{ $kamar->gambar_url }}" alt="{{ $kamar->nama }}" 
+                         style="width:60px; height:45px; object-fit:cover; border-radius:8px;">
+                </td>
                 <td><strong>{{ $kamar->nama }}</strong></td>
                 <td>Rp {{ number_format($kamar->harga, 0, ',', '.') }}</td>
                 <td>{{ $kamar->fasilitas ?? '-' }}</td>
@@ -36,10 +48,9 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="6" style="text-align:center; color:#94a3b8; padding:30px;">Belum ada data kamar</td></tr>
+            <tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:30px;">Belum ada data kamar</td></tr>
             @endforelse
         </tbody>
-
     </table>
 </div>
 @endsection

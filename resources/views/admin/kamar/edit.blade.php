@@ -7,7 +7,7 @@
 <p class="page-sub">Ubah data kamar</p>
 
 <div style="background:white; border-radius:20px; padding:24px; border:1px solid #f1f5f9; max-width:600px;">
-    <form method="POST" action="{{ route('admin.kamar.update', $kamar) }}">
+    <form method="POST" action="{{ route('admin.kamar.update', $kamar) }}" enctype="multipart/form-data">
         @csrf @method('PUT')
         <div class="form-group">
             <label for="nama">Nama Kamar</label>
@@ -32,6 +32,22 @@
                 <option value="Penuh" {{ $kamar->status == 'Penuh' ? 'selected' : '' }}>Penuh</option>
                 <option value="Maintenance" {{ $kamar->status == 'Maintenance' ? 'selected' : '' }}>Maintenance</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label>Gambar Saat Ini</label>
+            @if($kamar->gambar)
+                <div style="margin:8px 0;">
+                    <img src="{{ $kamar->gambar_url }}" alt="{{ $kamar->nama }}" 
+                         style="width:150px; height:100px; object-fit:cover; border-radius:12px; border:2px solid #f1f5f9;">
+                </div>
+            @else
+                <p style="color:#94a3b8;">Belum ada gambar</p>
+            @endif
+        </div>
+        <div class="form-group">
+            <label for="gambar">Ganti Gambar</label>
+            <input type="file" id="gambar" name="gambar" accept="image/*" />
+            <small style="color:#94a3b8;">Format: jpg, png, jpeg (max 2MB) - Kosongkan jika tidak ingin mengganti</small>
         </div>
         <div class="form-actions">
             <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Update</button>

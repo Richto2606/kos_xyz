@@ -10,12 +10,12 @@ return new class extends Migration
     {
         Schema::create('kamars', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 20); // Kamar A, B, C, dst
+            $table->string('nama', 20);
             $table->decimal('harga', 12, 0)->default(1000000);
             $table->text('fasilitas')->nullable();
             $table->text('deskripsi')->nullable();
             $table->enum('status', ['Tersedia', 'Penuh', 'Maintenance'])->default('Tersedia');
-            $table->string('gambar')->nullable();
+            $table->string('gambar')->nullable(); // <-- kolom untuk gambar
             $table->timestamps();
         });
     }

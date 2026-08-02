@@ -7,7 +7,7 @@
 <p class="page-sub">Isi data kamar baru</p>
 
 <div style="background:white; border-radius:20px; padding:24px; border:1px solid #f1f5f9; max-width:600px;">
-    <form method="POST" action="{{ route('admin.kamar.store') }}">
+    <form method="POST" action="{{ route('admin.kamar.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="nama">Nama Kamar</label>
@@ -32,6 +32,11 @@
                 <option value="Penuh">Penuh</option>
                 <option value="Maintenance">Maintenance</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label for="gambar">Gambar Kamar</label>
+            <input type="file" id="gambar" name="gambar" accept="image/*" />
+            <small style="color:#94a3b8;">Format: jpg, png, jpeg (max 2MB)</small>
         </div>
         <div class="form-actions">
             <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Simpan</button>
