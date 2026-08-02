@@ -1,8 +1,8 @@
-@extends('layouts.admin')
 
-@section('title', 'Edit Kamar · Kos XYZ')
 
-@section('content')
+<?php $__env->startSection('title', 'Tambah Kamar · Kos XYZ'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .form-container {
         background: white;
@@ -67,20 +67,6 @@
         margin-top: 4px;
     }
 
-    .preview-image {
-        margin: 10px 0;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 2px solid #f1f5f9;
-        max-width: 200px;
-    }
-    .preview-image img {
-        width: 100%;
-        height: 120px;
-        object-fit: cover;
-        display: block;
-    }
-
     .form-actions-modern {
         display: flex;
         gap: 12px;
@@ -128,62 +114,54 @@
 </style>
 
 <div class="form-container">
-    <h2><i class="fas fa-edit"></i> Edit Kamar</h2>
-    <p class="sub">Ubah data kamar <strong>{{ $kamar->nama }}</strong></p>
+    <h2><i class="fas fa-plus-circle"></i> Tambah Kamar</h2>
+    <p class="sub">Isi data kamar baru dengan lengkap</p>
 
-    <form method="POST" action="{{ route('admin.kamar.update', $kamar) }}" enctype="multipart/form-data">
-        @csrf @method('PUT')
+    <form method="POST" action="<?php echo e(route('admin.kamar.store')); ?>" enctype="multipart/form-data">
+        <?php echo csrf_field(); ?>
 
         <div class="form-group-modern">
             <label for="nama">Nama Kamar <span class="required">*</span></label>
-            <input type="text" id="nama" name="nama" required value="{{ old('nama', $kamar->nama) }}" />
+            <input type="text" id="nama" name="nama" required value="<?php echo e(old('nama')); ?>" placeholder="Contoh: Kamar F" />
         </div>
 
         <div class="form-group-modern">
             <label for="harga">Harga <span class="required">*</span></label>
-            <input type="number" id="harga" name="harga" required value="{{ old('harga', $kamar->harga) }}" />
+            <input type="number" id="harga" name="harga" required value="<?php echo e(old('harga', 1000000)); ?>" />
+            <div class="helper">Masukkan harga dalam Rupiah (tanpa titik atau koma)</div>
         </div>
 
         <div class="form-group-modern">
             <label for="fasilitas">Fasilitas</label>
-            <input type="text" id="fasilitas" name="fasilitas" value="{{ old('fasilitas', $kamar->fasilitas) }}" placeholder="Pisahkan dengan koma" />
+            <input type="text" id="fasilitas" name="fasilitas" value="<?php echo e(old('fasilitas', 'AC, KM Dalam, Meja, Kursi, Lemari, Tempat Tidur')); ?>" placeholder="Pisahkan dengan koma" />
+            <div class="helper">Contoh: AC, KM Dalam, WiFi, TV</div>
         </div>
 
         <div class="form-group-modern">
             <label for="deskripsi">Deskripsi</label>
-            <textarea id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi', $kamar->deskripsi) }}</textarea>
+            <textarea id="deskripsi" name="deskripsi" rows="3"><?php echo e(old('deskripsi', 'Kamar nyaman dengan fasilitas lengkap')); ?></textarea>
         </div>
 
         <div class="form-group-modern">
             <label for="status">Status <span class="required">*</span></label>
             <select id="status" name="status">
-                <option value="Tersedia" {{ $kamar->status == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
-                <option value="Penuh" {{ $kamar->status == 'Penuh' ? 'selected' : '' }}>Penuh</option>
-                <option value="Maintenance" {{ $kamar->status == 'Maintenance' ? 'selected' : '' }}>Maintenance</option>
+                <option value="Tersedia" <?php echo e(old('status') == 'Tersedia' ? 'selected' : ''); ?>>Tersedia</option>
+                <option value="Penuh" <?php echo e(old('status') == 'Penuh' ? 'selected' : ''); ?>>Penuh</option>
+                <option value="Maintenance" <?php echo e(old('status') == 'Maintenance' ? 'selected' : ''); ?>>Maintenance</option>
             </select>
         </div>
 
         <div class="form-group-modern">
-            <label>Gambar Saat Ini</label>
-            @if($kamar->gambar && file_exists(storage_path('app/public/kamar/' . $kamar->gambar)))
-                <div class="preview-image">
-                    <img src="{{ $kamar->gambar_url }}" alt="{{ $kamar->nama }}">
-                </div>
-            @else
-                <p style="color:#94a3b8; font-size:0.9rem;">Belum ada gambar</p>
-            @endif
-        </div>
-
-        <div class="form-group-modern">
-            <label for="gambar">Ganti Gambar</label>
+            <label for="gambar">Gambar Kamar</label>
             <input type="file" id="gambar" name="gambar" accept="image/*" />
-            <div class="helper">Kosongkan jika tidak ingin mengganti gambar</div>
+            <div class="helper">Format: jpg, png, jpeg (max 2MB)</div>
         </div>
 
         <div class="form-actions-modern">
-            <button type="submit" class="btn-save"><i class="fas fa-save"></i> Update</button>
-            <a href="{{ route('admin.kamar.index') }}" class="btn-cancel-modern"><i class="fas fa-times"></i> Batal</a>
+            <button type="submit" class="btn-save"><i class="fas fa-save"></i> Simpan</button>
+            <a href="<?php echo e(route('admin.kamar.index')); ?>" class="btn-cancel-modern"><i class="fas fa-times"></i> Batal</a>
         </div>
     </form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\kos-xyz\resources\views/admin/kamar/create.blade.php ENDPATH**/ ?>

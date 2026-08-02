@@ -1,8 +1,8 @@
-@extends('layouts.admin')
 
-@section('title', 'Dashboard · Kos XYZ')
 
-@section('content')
+<?php $__env->startSection('title', 'Dashboard · Kos XYZ'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .dashboard-stats {
         display: grid;
@@ -250,7 +250,8 @@
             </h1>
             <p class="page-sub" style="margin-bottom:0; font-size:0.95rem;">
                 <i class="far fa-calendar-alt" style="color:#b45309;"></i> 
-                {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
+                <?php echo e(\Carbon\Carbon::now()->translatedFormat('l, d F Y')); ?>
+
             </p>
         </div>
         <div style="display:flex; gap:10px; align-items:center;">
@@ -265,25 +266,25 @@
         <div class="stat-card blue">
             <div class="stat-icon"><i class="fas fa-home"></i></div>
             <div class="stat-label">Total Kamar</div>
-            <div class="stat-value">{{ $totalKamar ?? 0 }}</div>
+            <div class="stat-value"><?php echo e($totalKamar ?? 0); ?></div>
             <div class="stat-sub">Seluruh kamar yang terdaftar</div>
         </div>
         <div class="stat-card green">
             <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
             <div class="stat-label">Tersedia</div>
-            <div class="stat-value">{{ $tersedia ?? 0 }}</div>
+            <div class="stat-value"><?php echo e($tersedia ?? 0); ?></div>
             <div class="stat-sub">Kamar siap huni</div>
         </div>
         <div class="stat-card red">
             <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
             <div class="stat-label">Penuh</div>
-            <div class="stat-value">{{ $terisi ?? 0 }}</div>
+            <div class="stat-value"><?php echo e($terisi ?? 0); ?></div>
             <div class="stat-sub">Sudah ditempati</div>
         </div>
         <div class="stat-card yellow">
             <div class="stat-icon"><i class="fas fa-tools"></i></div>
             <div class="stat-label">Maintenance</div>
-            <div class="stat-value">{{ $maintenance ?? 0 }}</div>
+            <div class="stat-value"><?php echo e($maintenance ?? 0); ?></div>
             <div class="stat-sub">Dalam perbaikan</div>
         </div>
     </div>
@@ -291,25 +292,25 @@
     <!-- ===== STATISTIK PEMBAYARAN ===== -->
     <div class="section-header">
         <h3><i class="fas fa-credit-card"></i> Status Pembayaran</h3>
-        <span style="font-size:0.8rem; color:#94a3b8;">Bulan: {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</span>
+        <span style="font-size:0.8rem; color:#94a3b8;">Bulan: <?php echo e(\Carbon\Carbon::now()->translatedFormat('F Y')); ?></span>
     </div>
     <div class="dashboard-stats">
         <div class="stat-card green">
             <div class="stat-icon"><i class="fas fa-check-double"></i></div>
             <div class="stat-label">Lunas</div>
-            <div class="stat-value">{{ $lunas ?? 0 }}</div>
+            <div class="stat-value"><?php echo e($lunas ?? 0); ?></div>
             <div class="stat-sub">Pembayaran selesai</div>
         </div>
         <div class="stat-card yellow">
             <div class="stat-icon"><i class="fas fa-clock"></i></div>
             <div class="stat-label">Belum Bayar</div>
-            <div class="stat-value">{{ $belum ?? 0 }}</div>
+            <div class="stat-value"><?php echo e($belum ?? 0); ?></div>
             <div class="stat-sub">Menunggu pembayaran</div>
         </div>
         <div class="stat-card red">
             <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
             <div class="stat-label">Tunggak</div>
-            <div class="stat-value">{{ $tunggak ?? 0 }}</div>
+            <div class="stat-value"><?php echo e($tunggak ?? 0); ?></div>
             <div class="stat-sub">Melewati jatuh tempo</div>
         </div>
     </div>
@@ -322,14 +323,14 @@
         <div class="stat-card orange">
             <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
             <div class="stat-label">Pendapatan Bulan Ini</div>
-            <div class="stat-value">Rp {{ number_format($pendapatanBulan ?? 0, 0, ',', '.') }}</div>
-            <div class="stat-sub">{{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</div>
+            <div class="stat-value">Rp <?php echo e(number_format($pendapatanBulan ?? 0, 0, ',', '.')); ?></div>
+            <div class="stat-sub"><?php echo e(\Carbon\Carbon::now()->translatedFormat('F Y')); ?></div>
         </div>
         <div class="stat-card purple">
             <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
             <div class="stat-label">Pendapatan Tahunan</div>
-            <div class="stat-value">Rp {{ number_format($pendapatanTahunan ?? 0, 0, ',', '.') }}</div>
-            <div class="stat-sub">{{ \Carbon\Carbon::now()->year }}</div>
+            <div class="stat-value">Rp <?php echo e(number_format($pendapatanTahunan ?? 0, 0, ',', '.')); ?></div>
+            <div class="stat-sub"><?php echo e(\Carbon\Carbon::now()->year); ?></div>
         </div>
     </div>
 
@@ -351,7 +352,7 @@
     <!-- ===== DAFTAR KAMAR ===== -->
     <div class="section-header">
         <h3><i class="fas fa-door-open"></i> Daftar Kamar</h3>
-        <a href="{{ route('admin.kamar.index') }}" class="btn-outline-orange">
+        <a href="<?php echo e(route('admin.kamar.index')); ?>" class="btn-outline-orange">
             Lihat Semua <i class="fas fa-arrow-right"></i>
         </a>
     </div>
@@ -367,43 +368,44 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse(($kamars ?? []) as $kamar)
+                <?php $__empty_1 = true; $__currentLoopData = ($kamars ?? []); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kamar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td><strong style="color:#0f172a;">{{ $kamar->nama }}</strong></td>
-                    <td>Rp {{ number_format($kamar->harga, 0, ',', '.') }}</td>
+                    <td><?php echo e($loop->iteration); ?></td>
+                    <td><strong style="color:#0f172a;"><?php echo e($kamar->nama); ?></strong></td>
+                    <td>Rp <?php echo e(number_format($kamar->harga, 0, ',', '.')); ?></td>
                     <td style="max-width:180px;">
-                        @php
+                        <?php
                             $fasilitas = explode(',', $kamar->fasilitas ?? '');
                             $firstThree = array_slice($fasilitas, 0, 3);
-                        @endphp
-                        @foreach($firstThree as $fas)
+                        ?>
+                        <?php $__currentLoopData = $firstThree; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <span style="display:inline-block; background:#f8fafc; padding:2px 10px; border-radius:20px; font-size:0.7rem; color:#475569; margin:2px;">
-                                {{ trim($fas) }}
+                                <?php echo e(trim($fas)); ?>
+
                             </span>
-                        @endforeach
-                        @if(count($fasilitas) > 3)
-                            <span style="font-size:0.7rem; color:#94a3b8;">+{{ count($fasilitas) - 3 }}</span>
-                        @endif
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php if(count($fasilitas) > 3): ?>
+                            <span style="font-size:0.7rem; color:#94a3b8;">+<?php echo e(count($fasilitas) - 3); ?></span>
+                        <?php endif; ?>
                     </td>
                     <td>
-                        @if($kamar->status == 'Tersedia')
+                        <?php if($kamar->status == 'Tersedia'): ?>
                             <span class="badge-status tersedia"><i class="fas fa-circle"></i> Tersedia</span>
-                        @elseif($kamar->status == 'Penuh')
+                        <?php elseif($kamar->status == 'Penuh'): ?>
                             <span class="badge-status penuh"><i class="fas fa-circle"></i> Penuh</span>
-                        @else
+                        <?php else: ?>
                             <span class="badge-status maintenance"><i class="fas fa-circle"></i> Maintenance</span>
-                        @endif
+                        <?php endif; ?>
                     </td>
                 </tr>
-                @empty
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <tr>
                     <td colspan="5" style="text-align:center; padding:30px; color:#94a3b8;">
                         <i class="fas fa-inbox" style="font-size:2rem; display:block; margin-bottom:10px;"></i>
                         Belum ada data kamar
                     </td>
                 </tr>
-                @endforelse
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -423,7 +425,7 @@
                     labels: ['Tersedia', 'Penuh', 'Maintenance'],
                     datasets: [{
                         label: 'Jumlah Kamar',
-                        data: [{{ $tersedia ?? 0 }}, {{ $terisi ?? 0 }}, {{ $maintenance ?? 0 }}],
+                        data: [<?php echo e($tersedia ?? 0); ?>, <?php echo e($terisi ?? 0); ?>, <?php echo e($maintenance ?? 0); ?>],
                         backgroundColor: ['#22c55e', '#ef4444', '#f59e0b'],
                         borderColor: ['#16a34a', '#dc2626', '#d97706'],
                         borderWidth: 2,
@@ -460,7 +462,7 @@
                     labels: ['Lunas', 'Belum Bayar', 'Tunggak'],
                     datasets: [{
                         label: 'Jumlah Tagihan',
-                        data: [{{ $lunas ?? 0 }}, {{ $belum ?? 0 }}, {{ $tunggak ?? 0 }}],
+                        data: [<?php echo e($lunas ?? 0); ?>, <?php echo e($belum ?? 0); ?>, <?php echo e($tunggak ?? 0); ?>],
                         backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'],
                         borderColor: ['#16a34a', '#d97706', '#dc2626'],
                         borderWidth: 2,
@@ -489,4 +491,5 @@
         }
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\kos-xyz\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>

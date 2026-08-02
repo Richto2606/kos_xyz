@@ -12,8 +12,8 @@
     <meta property="og:title" content="Kos XYZ · Yogyakarta - Tempat Tinggal Nyaman" />
     <meta property="og:description" content="Kos nyaman dengan fasilitas lengkap di Yogyakarta. Harga mulai Rp 1.000.000/bulan." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:image" content="{{ asset('images/logo-kos.png') }}" />
+    <meta property="og:url" content="<?php echo e(url()->current()); ?>" />
+    <meta property="og:image" content="<?php echo e(asset('images/logo-kos.png')); ?>" />
     <meta name="twitter:card" content="summary_large_image" />
     <!-- ===== END META TAG SEO ===== -->
     
@@ -408,13 +408,13 @@
         <div class="fade-in">
             <!-- ===== BREADCRUMB (Update #6) ===== -->
             <nav class="breadcrumb">
-                <a href="{{ route('home') }}"><i class="fas fa-home"></i> Beranda</a>
+                <a href="<?php echo e(route('home')); ?>"><i class="fas fa-home"></i> Beranda</a>
                 <span>/</span>
                 <span>Kamar</span>
-                @if(request('search'))
+                <?php if(request('search')): ?>
                     <span>/</span>
-                    <span>Hasil pencarian: "{{ request('search') }}"</span>
-                @endif
+                    <span>Hasil pencarian: "<?php echo e(request('search')); ?>"</span>
+                <?php endif; ?>
             </nav>
 
             <h2 class="section-title" id="kamar">
@@ -423,60 +423,62 @@
             </h2>
 
             <!-- ===== SEARCH FORM (Update #5) ===== -->
-            <form method="GET" action="{{ route('home') }}" class="search-form">
-                <input type="text" name="search" placeholder="Cari kamar..." value="{{ request('search') }}" />
+            <form method="GET" action="<?php echo e(route('home')); ?>" class="search-form">
+                <input type="text" name="search" placeholder="Cari kamar..." value="<?php echo e(request('search')); ?>" />
                 <button type="submit" class="btn-wa" style="background:#b45309; border:none; padding:10px 20px; border-radius:12px; color:white; font-weight:600; cursor:pointer;">
                     <i class="fas fa-search"></i> Cari
                 </button>
             </form>
 
             <div class="kamar-grid">
-                @forelse($kamars as $kamar)
+                <?php $__empty_1 = true; $__currentLoopData = $kamars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kamar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <div class="kamar-card">
                     <!-- ===== GAMBAR KAMAR ===== -->
                     <div class="gambar">
-                        @php
+                        <?php
                             $gambarPath = storage_path('app/public/kamar/' . $kamar->gambar);
                             $gambarExists = $kamar->gambar && file_exists($gambarPath);
-                        @endphp
-                        @if($gambarExists)
-                            <img src="{{ asset('storage/kamar/' . $kamar->gambar) }}" 
-                                 alt="Foto {{ $kamar->nama }}" 
+                        ?>
+                        <?php if($gambarExists): ?>
+                            <img src="<?php echo e(asset('storage/kamar/' . $kamar->gambar)); ?>" 
+                                 alt="Foto <?php echo e($kamar->nama); ?>" 
                                  loading="lazy">
-                        @else
+                        <?php else: ?>
                             <i class="fas fa-bed"></i>
-                        @endif
+                        <?php endif; ?>
                     </div>
 
-                    <div class="nama-kamar">{{ $kamar->nama }}</div>
+                    <div class="nama-kamar"><?php echo e($kamar->nama); ?></div>
                     <div>
-                        <span class="harga">Rp {{ number_format($kamar->harga, 0, ',', '.') }}</span>
-                        <span class="badge {{ $kamar->status == 'Tersedia' ? 'badge-success' : ($kamar->status == 'Penuh' ? 'badge-danger' : 'badge-warning') }}">
-                            <i class="fas fa-{{ $kamar->status == 'Tersedia' ? 'check-circle' : ($kamar->status == 'Penuh' ? 'times-circle' : 'hammer') }}"></i> {{ $kamar->status }}
+                        <span class="harga">Rp <?php echo e(number_format($kamar->harga, 0, ',', '.')); ?></span>
+                        <span class="badge <?php echo e($kamar->status == 'Tersedia' ? 'badge-success' : ($kamar->status == 'Penuh' ? 'badge-danger' : 'badge-warning')); ?>">
+                            <i class="fas fa-<?php echo e($kamar->status == 'Tersedia' ? 'check-circle' : ($kamar->status == 'Penuh' ? 'times-circle' : 'hammer')); ?>"></i> <?php echo e($kamar->status); ?>
+
                         </span>
                     </div>
                     <div class="deskripsi">
-                        <i class="fas fa-quote-left" style="color:#b45309; margin-right:4px;"></i> {{ $kamar->deskripsi ?? 'Kamar nyaman dengan fasilitas lengkap' }}
+                        <i class="fas fa-quote-left" style="color:#b45309; margin-right:4px;"></i> <?php echo e($kamar->deskripsi ?? 'Kamar nyaman dengan fasilitas lengkap'); ?>
+
                     </div>
                     <div class="fasilitas">
-                        @foreach(explode(',', $kamar->fasilitas ?? '') as $fas)
-                        <span><i class="fas fa-check-circle"></i> {{ trim($fas) }}</span>
-                        @endforeach
+                        <?php $__currentLoopData = explode(',', $kamar->fasilitas ?? ''); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <span><i class="fas fa-check-circle"></i> <?php echo e(trim($fas)); ?></span>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                     <!-- ===== TOMBOL DETAIL (Update #4) ===== -->
-                    <a href="{{ route('public.kamar.detail', $kamar->id) }}" class="btn-detail">
+                    <a href="<?php echo e(route('public.kamar.detail', $kamar->id)); ?>" class="btn-detail">
                         Lihat Detail <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
-                @empty
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <p style="color:var(--text-muted); padding:40px; text-align:center; grid-column:1/-1;">
-                    @if(request('search'))
-                        Tidak ada kamar dengan nama "{{ request('search') }}"
-                    @else
+                    <?php if(request('search')): ?>
+                        Tidak ada kamar dengan nama "<?php echo e(request('search')); ?>"
+                    <?php else: ?>
                         Belum ada data kamar
-                    @endif
+                    <?php endif; ?>
                 </p>
-                @endforelse
+                <?php endif; ?>
             </div>
         </div>
 
@@ -527,7 +529,7 @@
         <p style="margin-top:6px; font-size:0.9rem;">
             &copy; 2026 · Sistem Informasi Manajemen Kos &nbsp;|&nbsp;
             <!-- ===== LINK ADMIN (Update #2) ===== -->
-            <a href="{{ route('admin.login') }}" class="admin-link">
+            <a href="<?php echo e(route('admin.login')); ?>" class="admin-link">
                 <i class="fas fa-lock"></i> Admin
             </a>
         </p>
@@ -597,4 +599,4 @@
     </script>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\kos-xyz\resources\views/public/index.blade.php ENDPATH**/ ?>

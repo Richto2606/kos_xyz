@@ -1,8 +1,8 @@
-@extends('layouts.admin')
 
-@section('title', 'Manajemen Tagihan · Kos XYZ')
 
-@section('content')
+<?php $__env->startSection('title', 'Manajemen Tagihan · Kos XYZ'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .header-actions-modern {
         display: flex;
@@ -371,8 +371,8 @@
         <p>Auto-generate invoice, status pembayaran</p>
     </div>
     <div class="right">
-        <form method="POST" action="{{ route('admin.tagihan.generate') }}" style="display:inline;">
-            @csrf
+        <form method="POST" action="<?php echo e(route('admin.tagihan.generate')); ?>" style="display:inline;">
+            <?php echo csrf_field(); ?>
             <button type="submit" class="btn-modern-success">
                 <i class="fas fa-sync-alt"></i> Generate Tagihan
             </button>
@@ -381,82 +381,83 @@
 </div>
 
 <!-- STATISTIK TAGIHAN -->
-@php
+<?php
     $totalTagihan = $tagihans->count();
     $paid = $tagihans->where('status', 'Paid')->count();
     $unpaid = $tagihans->where('status', 'Unpaid')->count();
     $pending = $tagihans->where('status', 'Pending')->count();
     $totalNominal = $tagihans->where('status', 'Paid')->sum('nominal');
-@endphp
+?>
 
 <div class="tagihan-stats">
     <div class="tagihan-stat-card">
-        <div class="number blue">{{ $totalTagihan }}</div>
+        <div class="number blue"><?php echo e($totalTagihan); ?></div>
         <div class="label">📋 Total Tagihan</div>
     </div>
     <div class="tagihan-stat-card">
-        <div class="number green">{{ $paid }}</div>
+        <div class="number green"><?php echo e($paid); ?></div>
         <div class="label">✅ Lunas</div>
     </div>
     <div class="tagihan-stat-card">
-        <div class="number yellow">{{ $pending }}</div>
+        <div class="number yellow"><?php echo e($pending); ?></div>
         <div class="label">⏳ Pending</div>
     </div>
     <div class="tagihan-stat-card">
-        <div class="number red">{{ $unpaid }}</div>
+        <div class="number red"><?php echo e($unpaid); ?></div>
         <div class="label">❌ Belum Bayar</div>
     </div>
     <div class="tagihan-stat-card">
-        <div class="number" style="color:#b45309;">Rp {{ number_format($totalNominal, 0, ',', '.') }}</div>
+        <div class="number" style="color:#b45309;">Rp <?php echo e(number_format($totalNominal, 0, ',', '.')); ?></div>
         <div class="label">💰 Total Pendapatan</div>
     </div>
 </div>
 
 <!-- TAGIHAN GRID -->
 <div class="tagihan-grid-modern">
-    @forelse($tagihans as $tagihan)
+    <?php $__empty_1 = true; $__currentLoopData = $tagihans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tagihan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
     <div class="tagihan-card-modern">
         <div class="card-header">
             <span class="penyewa">
                 <i class="fas fa-user-circle"></i>
-                {{ $tagihan->penyewa->nama_lengkap ?? 'Tidak diketahui' }}
+                <?php echo e($tagihan->penyewa->nama_lengkap ?? 'Tidak diketahui'); ?>
+
             </span>
-            <span class="periode">{{ $tagihan->bulan }} {{ $tagihan->tahun }}</span>
+            <span class="periode"><?php echo e($tagihan->bulan); ?> <?php echo e($tagihan->tahun); ?></span>
         </div>
         <div class="card-body">
             <div class="item">
                 <div class="label">Nominal</div>
-                <div class="value total">Rp {{ number_format($tagihan->nominal, 0, ',', '.') }}</div>
+                <div class="value total">Rp <?php echo e(number_format($tagihan->nominal, 0, ',', '.')); ?></div>
             </div>
             <div class="item">
                 <div class="label">Biaya Tambahan</div>
-                <div class="value">{{ $tagihan->biaya_tambahan > 0 ? 'Rp '.number_format($tagihan->biaya_tambahan, 0, ',', '.') : '-' }}</div>
+                <div class="value"><?php echo e($tagihan->biaya_tambahan > 0 ? 'Rp '.number_format($tagihan->biaya_tambahan, 0, ',', '.') : '-'); ?></div>
             </div>
             <div class="item" style="grid-column: 1 / -1;">
                 <div class="label">Total</div>
-                <div class="value total">Rp {{ number_format($tagihan->nominal + $tagihan->biaya_tambahan, 0, ',', '.') }}</div>
+                <div class="value total">Rp <?php echo e(number_format($tagihan->nominal + $tagihan->biaya_tambahan, 0, ',', '.')); ?></div>
             </div>
-            @if($tagihan->keterangan_tambahan)
+            <?php if($tagihan->keterangan_tambahan): ?>
             <div class="item" style="grid-column: 1 / -1;">
                 <div class="label">Keterangan</div>
-                <div class="value" style="font-size:0.85rem; font-weight:400; color:#64748b;">{{ $tagihan->keterangan_tambahan }}</div>
+                <div class="value" style="font-size:0.85rem; font-weight:400; color:#64748b;"><?php echo e($tagihan->keterangan_tambahan); ?></div>
             </div>
-            @endif
+            <?php endif; ?>
         </div>
         <div class="card-footer">
-            <span class="status {{ strtolower($tagihan->status) }}">
+            <span class="status <?php echo e(strtolower($tagihan->status)); ?>">
                 <i class="fas fa-circle"></i>
-                @if($tagihan->status == 'Paid')
+                <?php if($tagihan->status == 'Paid'): ?>
                     ✅ Lunas
-                @elseif($tagihan->status == 'Pending')
+                <?php elseif($tagihan->status == 'Pending'): ?>
                     ⏳ Pending
-                @else
+                <?php else: ?>
                     ❌ Belum Bayar
-                @endif
+                <?php endif; ?>
             </span>
             <div class="actions">
-                <form method="POST" action="{{ route('admin.tagihan.updateStatus', $tagihan->id) }}" style="display:inline;">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('admin.tagihan.updateStatus', $tagihan->id)); ?>" style="display:inline;">
+                    <?php echo csrf_field(); ?>
                     <button type="submit" class="btn-icon" title="Update Status">
                         <i class="fas fa-sync-alt"></i>
                     </button>
@@ -464,43 +465,44 @@
             </div>
         </div>
     </div>
-    @empty
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
     <div class="empty-state">
         <i class="fas fa-file-invoice"></i>
         <h3>Belum ada tagihan</h3>
         <p>Klik tombol "Generate Tagihan" untuk membuat tagihan baru</p>
     </div>
-    @endforelse
+    <?php endif; ?>
 </div>
 
 <!-- NOTIFIKASI -->
 <div class="notifikasi-section">
     <h3><i class="fas fa-bell"></i> Kirim Notifikasi</h3>
     <div class="notif-buttons">
-        <form method="POST" action="{{ route('admin.notifikasi.wa') }}" style="display:inline;">
-            @csrf
+        <form method="POST" action="<?php echo e(route('admin.notifikasi.wa')); ?>" style="display:inline;">
+            <?php echo csrf_field(); ?>
             <button type="submit" class="btn-notif wa">
                 <i class="fab fa-whatsapp"></i> Kirim WA
             </button>
         </form>
-        <form method="POST" action="{{ route('admin.notifikasi.email') }}" style="display:inline;">
-            @csrf
+        <form method="POST" action="<?php echo e(route('admin.notifikasi.email')); ?>" style="display:inline;">
+            <?php echo csrf_field(); ?>
             <button type="submit" class="btn-notif email">
                 <i class="fas fa-envelope"></i> Kirim Email
             </button>
         </form>
-        <form method="POST" action="{{ route('admin.notifikasi.reminder') }}" style="display:inline;">
-            @csrf
+        <form method="POST" action="<?php echo e(route('admin.notifikasi.reminder')); ?>" style="display:inline;">
+            <?php echo csrf_field(); ?>
             <button type="submit" class="btn-notif reminder">
                 <i class="fas fa-clock"></i> Auto-Reminder (H-3)
             </button>
         </form>
     </div>
-    @if(session('success'))
+    <?php if(session('success')): ?>
     <div style="margin-top: 14px; padding: 12px 18px; background: #dcfce7; border-radius: 10px; color: #15803d; font-weight:500; display:flex; align-items:center; gap:8px;">
-        <i class="fas fa-check-circle"></i> {{ session('success') }}
+        <i class="fas fa-check-circle"></i> <?php echo e(session('success')); ?>
+
     </div>
-    @endif
+    <?php endif; ?>
 </div>
 
 <!-- Toast -->
@@ -508,9 +510,9 @@
 
 <script>
     // Show toast jika ada session flash
-    @if(session('success'))
-        showToast('{{ session('success') }}');
-    @endif
+    <?php if(session('success')): ?>
+        showToast('<?php echo e(session('success')); ?>');
+    <?php endif; ?>
 
     function showToast(msg) {
         const t = document.getElementById('toastNotif');
@@ -520,4 +522,5 @@
     }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\kos-xyz\resources\views/admin/tagihan/index.blade.php ENDPATH**/ ?>

@@ -1,8 +1,8 @@
-@extends('layouts.admin')
 
-@section('title', 'Tambah Penyewa · Kos XYZ')
 
-@section('content')
+<?php $__env->startSection('title', 'Tambah Penyewa · Kos XYZ'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .form-container {
         background: white;
@@ -147,53 +147,74 @@
     <p class="sub">Isi data penyewa baru dengan lengkap</p>
 
     <!-- TAMPILKAN ERROR -->
-    @if($errors->any())
+    <?php if($errors->any()): ?>
     <div class="alert-danger">
         <i class="fas fa-exclamation-circle"></i>
         <ul style="list-style:none; margin:0; padding:0;">
-            @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <li><?php echo e($error); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
     </div>
-    @endif
+    <?php endif; ?>
 
-    <form method="POST" action="{{ route('admin.penyewa.store') }}">
-        @csrf
+    <form method="POST" action="<?php echo e(route('admin.penyewa.store')); ?>">
+        <?php echo csrf_field(); ?>
 
         <div class="form-group-modern">
             <label for="nama_lengkap">Nama Lengkap <span class="required">*</span></label>
-            <input type="text" id="nama_lengkap" name="nama_lengkap" required value="{{ old('nama_lengkap') }}" placeholder="Contoh: Ahmad Fauzi" />
-            @error('nama_lengkap')
-            <div class="error-text">{{ $message }}</div>
-            @enderror
+            <input type="text" id="nama_lengkap" name="nama_lengkap" required value="<?php echo e(old('nama_lengkap')); ?>" placeholder="Contoh: Ahmad Fauzi" />
+            <?php $__errorArgs = ['nama_lengkap'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+            <div class="error-text"><?php echo e($message); ?></div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="form-row">
             <div class="form-group-modern">
                 <label for="ktp">No. KTP <span class="required">*</span></label>
-                <input type="text" id="ktp" name="ktp" required value="{{ old('ktp') }}" placeholder="16 digit" />
-                @error('ktp')
-                <div class="error-text">{{ $message }}</div>
-                @enderror
+                <input type="text" id="ktp" name="ktp" required value="<?php echo e(old('ktp')); ?>" placeholder="16 digit" />
+                <?php $__errorArgs = ['ktp'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="error-text"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             <div class="form-group-modern">
                 <label for="no_hp">No. HP <span class="required">*</span></label>
-                <input type="text" id="no_hp" name="no_hp" required value="{{ old('no_hp') }}" placeholder="08123456789" />
-                @error('no_hp')
-                <div class="error-text">{{ $message }}</div>
-                @enderror
+                <input type="text" id="no_hp" name="no_hp" required value="<?php echo e(old('no_hp')); ?>" placeholder="08123456789" />
+                <?php $__errorArgs = ['no_hp'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="error-text"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group-modern">
                 <label for="kontak_darurat">Kontak Darurat</label>
-                <input type="text" id="kontak_darurat" name="kontak_darurat" value="{{ old('kontak_darurat') }}" placeholder="08129876543" />
+                <input type="text" id="kontak_darurat" name="kontak_darurat" value="<?php echo e(old('kontak_darurat')); ?>" placeholder="08129876543" />
             </div>
             <div class="form-group-modern">
                 <label for="pekerjaan">Pekerjaan</label>
-                <input type="text" id="pekerjaan" name="pekerjaan" value="{{ old('pekerjaan') }}" placeholder="Mahasiswa / Karyawan" />
+                <input type="text" id="pekerjaan" name="pekerjaan" value="<?php echo e(old('pekerjaan')); ?>" placeholder="Mahasiswa / Karyawan" />
             </div>
         </div>
 
@@ -201,37 +222,52 @@
             <label for="kamar_id">Kamar <span class="required">*</span></label>
             <select id="kamar_id" name="kamar_id" required>
                 <option value="">Pilih Kamar</option>
-                @foreach($kamars as $kamar)
-                <option value="{{ $kamar->id }}" {{ old('kamar_id') == $kamar->id ? 'selected' : '' }}>
-                    {{ $kamar->nama }} - Rp {{ number_format($kamar->harga, 0, ',', '.') }} ({{ $kamar->status }})
+                <?php $__currentLoopData = $kamars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kamar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($kamar->id); ?>" <?php echo e(old('kamar_id') == $kamar->id ? 'selected' : ''); ?>>
+                    <?php echo e($kamar->nama); ?> - Rp <?php echo e(number_format($kamar->harga, 0, ',', '.')); ?> (<?php echo e($kamar->status); ?>)
                 </option>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
-            @error('kamar_id')
-            <div class="error-text">{{ $message }}</div>
-            @enderror
+            <?php $__errorArgs = ['kamar_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+            <div class="error-text"><?php echo e($message); ?></div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             <div class="helper">Hanya kamar yang tersedia yang bisa dipilih</div>
         </div>
 
         <div class="form-row">
             <div class="form-group-modern">
                 <label for="tanggal_mulai_sewa">Tanggal Mulai Sewa <span class="required">*</span></label>
-                <input type="date" id="tanggal_mulai_sewa" name="tanggal_mulai_sewa" required value="{{ old('tanggal_mulai_sewa', date('Y-m-d')) }}" />
-                @error('tanggal_mulai_sewa')
-                <div class="error-text">{{ $message }}</div>
-                @enderror
+                <input type="date" id="tanggal_mulai_sewa" name="tanggal_mulai_sewa" required value="<?php echo e(old('tanggal_mulai_sewa', date('Y-m-d'))); ?>" />
+                <?php $__errorArgs = ['tanggal_mulai_sewa'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="error-text"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             <div class="form-group-modern">
                 <label for="tanggal_berakhir_sewa">Tanggal Berakhir Sewa</label>
-                <input type="date" id="tanggal_berakhir_sewa" name="tanggal_berakhir_sewa" value="{{ old('tanggal_berakhir_sewa') }}" />
+                <input type="date" id="tanggal_berakhir_sewa" name="tanggal_berakhir_sewa" value="<?php echo e(old('tanggal_berakhir_sewa')); ?>" />
                 <div class="helper">Kosongkan jika sewa berlangsung terus</div>
             </div>
         </div>
 
         <div class="form-actions-modern">
             <button type="submit" class="btn-save"><i class="fas fa-save"></i> Simpan</button>
-            <a href="{{ route('admin.penyewa.index') }}" class="btn-cancel-modern"><i class="fas fa-times"></i> Batal</a>
+            <a href="<?php echo e(route('admin.penyewa.index')); ?>" class="btn-cancel-modern"><i class="fas fa-times"></i> Batal</a>
         </div>
     </form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\kos-xyz\resources\views/admin/penyewa/create.blade.php ENDPATH**/ ?>

@@ -42,5 +42,64 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/notifikasi/wa', [AdminController::class, 'kirimWA'])->name('notifikasi.wa');
         Route::post('/notifikasi/email', [AdminController::class, 'kirimEmail'])->name('notifikasi.email');
         Route::post('/notifikasi/reminder', [AdminController::class, 'kirimReminder'])->name('notifikasi.reminder');
+      Route::get('/test-dashboard-simple', function () {
+    try {
+        $totalKamar = App\Models\Kamar::count();
+        return view('admin.dashboard-test', ['totalKamar' => $totalKamar]);
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+})->name('test.dashboard');
     });
+});
+
+// ============= ROUTE TEST =============
+Route::get('/test-simple', function () {
+    return '<h1 style="color:green;">✅ Laravel berfungsi!</h1>';
+});
+
+// ============= ROUTE TEST DASHBOARD =============
+Route::get('/test-dashboard-direct', function () {
+    try {
+        // Ambil data dari database
+        $kamars = App\Models\Kamar::all();
+        $totalKamar = $kamars->count();
+        $tersedia = $kamars->where('status', 'Tersedia')->count();
+        $terisi = $kamars->where('status', 'Penuh')->count();
+        $maintenance = $kamars->where('status', 'Maintenance')->count();
+        
+        // Data dummy untuk test
+        $data = [
+            'kamars' => $kamars,
+            'totalKamar' => $totalKamar,
+            'tersedia' => $tersedia,
+            'terisi' => $terisi,
+            'maintenance' => $maintenance,
+            'lunas' => 0,
+            'belum' => 0,
+            'tunggak' => 0,
+            'pendapatanBulan' => 0,
+            'pendapatanTahunan' => 0,
+        ];
+        
+        // Tampilkan data dalam bentuk JSON dulu untuk test
+        return response()->json([
+            'status' => 'success',
+            'data' => $data,
+            'message' => 'Dashboard data berhasil diambil!'
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'line' => $e->getLine(),
+            'file' => $e->getFile()
+        ]);
+    }
+});
+
+Route::get('/test-layout', function () {
+    $totalKamar = App\Models\Kamar::count();
+    return view('admin.dashboard-test-layout', ['totalKamar' => $totalKamar]);
 });

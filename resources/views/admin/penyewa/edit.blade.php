@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Penyewa · Kos XYZ')
+@section('title', 'Edit Penyewa · Kos XYZ')
 
 @section('content')
 <style>
@@ -64,11 +64,6 @@
         color: #94a3b8;
         margin-top: 4px;
     }
-    .form-group-modern .error-text {
-        color: #ef4444;
-        font-size: 0.8rem;
-        margin-top: 4px;
-    }
 
     .form-row {
         display: grid;
@@ -121,17 +116,6 @@
         background: #e2e8f0;
     }
 
-    .alert-danger {
-        background: #fee2e2;
-        color: #b91c1c;
-        padding: 12px 18px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
     @media (max-width: 600px) {
         .form-row {
             grid-template-columns: 1fr;
@@ -143,57 +127,36 @@
 </style>
 
 <div class="form-container">
-    <h2><i class="fas fa-user-plus"></i> Tambah Penyewa</h2>
-    <p class="sub">Isi data penyewa baru dengan lengkap</p>
+    <h2><i class="fas fa-user-edit"></i> Edit Penyewa</h2>
+    <p class="sub">Ubah data penyewa <strong>{{ $penyewa->nama_lengkap }}</strong></p>
 
-    <!-- TAMPILKAN ERROR -->
-    @if($errors->any())
-    <div class="alert-danger">
-        <i class="fas fa-exclamation-circle"></i>
-        <ul style="list-style:none; margin:0; padding:0;">
-            @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-
-    <form method="POST" action="{{ route('admin.penyewa.store') }}">
-        @csrf
+    <form method="POST" action="{{ route('admin.penyewa.update', $penyewa) }}">
+        @csrf @method('PUT')
 
         <div class="form-group-modern">
             <label for="nama_lengkap">Nama Lengkap <span class="required">*</span></label>
-            <input type="text" id="nama_lengkap" name="nama_lengkap" required value="{{ old('nama_lengkap') }}" placeholder="Contoh: Ahmad Fauzi" />
-            @error('nama_lengkap')
-            <div class="error-text">{{ $message }}</div>
-            @enderror
+            <input type="text" id="nama_lengkap" name="nama_lengkap" required value="{{ old('nama_lengkap', $penyewa->nama_lengkap) }}" />
         </div>
 
         <div class="form-row">
             <div class="form-group-modern">
                 <label for="ktp">No. KTP <span class="required">*</span></label>
-                <input type="text" id="ktp" name="ktp" required value="{{ old('ktp') }}" placeholder="16 digit" />
-                @error('ktp')
-                <div class="error-text">{{ $message }}</div>
-                @enderror
+                <input type="text" id="ktp" name="ktp" required value="{{ old('ktp', $penyewa->ktp) }}" />
             </div>
             <div class="form-group-modern">
                 <label for="no_hp">No. HP <span class="required">*</span></label>
-                <input type="text" id="no_hp" name="no_hp" required value="{{ old('no_hp') }}" placeholder="08123456789" />
-                @error('no_hp')
-                <div class="error-text">{{ $message }}</div>
-                @enderror
+                <input type="text" id="no_hp" name="no_hp" required value="{{ old('no_hp', $penyewa->no_hp) }}" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group-modern">
                 <label for="kontak_darurat">Kontak Darurat</label>
-                <input type="text" id="kontak_darurat" name="kontak_darurat" value="{{ old('kontak_darurat') }}" placeholder="08129876543" />
+                <input type="text" id="kontak_darurat" name="kontak_darurat" value="{{ old('kontak_darurat', $penyewa->kontak_darurat) }}" />
             </div>
             <div class="form-group-modern">
                 <label for="pekerjaan">Pekerjaan</label>
-                <input type="text" id="pekerjaan" name="pekerjaan" value="{{ old('pekerjaan') }}" placeholder="Mahasiswa / Karyawan" />
+                <input type="text" id="pekerjaan" name="pekerjaan" value="{{ old('pekerjaan', $penyewa->pekerjaan) }}" />
             </div>
         </div>
 
@@ -202,34 +165,27 @@
             <select id="kamar_id" name="kamar_id" required>
                 <option value="">Pilih Kamar</option>
                 @foreach($kamars as $kamar)
-                <option value="{{ $kamar->id }}" {{ old('kamar_id') == $kamar->id ? 'selected' : '' }}>
+                <option value="{{ $kamar->id }}" {{ $penyewa->kamar_id == $kamar->id ? 'selected' : '' }}>
                     {{ $kamar->nama }} - Rp {{ number_format($kamar->harga, 0, ',', '.') }} ({{ $kamar->status }})
                 </option>
                 @endforeach
             </select>
-            @error('kamar_id')
-            <div class="error-text">{{ $message }}</div>
-            @enderror
-            <div class="helper">Hanya kamar yang tersedia yang bisa dipilih</div>
         </div>
 
         <div class="form-row">
             <div class="form-group-modern">
                 <label for="tanggal_mulai_sewa">Tanggal Mulai Sewa <span class="required">*</span></label>
-                <input type="date" id="tanggal_mulai_sewa" name="tanggal_mulai_sewa" required value="{{ old('tanggal_mulai_sewa', date('Y-m-d')) }}" />
-                @error('tanggal_mulai_sewa')
-                <div class="error-text">{{ $message }}</div>
-                @enderror
+                <input type="date" id="tanggal_mulai_sewa" name="tanggal_mulai_sewa" required value="{{ old('tanggal_mulai_sewa', $penyewa->tanggal_mulai_sewa->format('Y-m-d')) }}" />
             </div>
             <div class="form-group-modern">
                 <label for="tanggal_berakhir_sewa">Tanggal Berakhir Sewa</label>
-                <input type="date" id="tanggal_berakhir_sewa" name="tanggal_berakhir_sewa" value="{{ old('tanggal_berakhir_sewa') }}" />
+                <input type="date" id="tanggal_berakhir_sewa" name="tanggal_berakhir_sewa" value="{{ old('tanggal_berakhir_sewa', $penyewa->tanggal_berakhir_sewa ? $penyewa->tanggal_berakhir_sewa->format('Y-m-d') : '') }}" />
                 <div class="helper">Kosongkan jika sewa berlangsung terus</div>
             </div>
         </div>
 
         <div class="form-actions-modern">
-            <button type="submit" class="btn-save"><i class="fas fa-save"></i> Simpan</button>
+            <button type="submit" class="btn-save"><i class="fas fa-save"></i> Update</button>
             <a href="{{ route('admin.penyewa.index') }}" class="btn-cancel-modern"><i class="fas fa-times"></i> Batal</a>
         </div>
     </form>

@@ -1,8 +1,8 @@
-@extends('layouts.admin')
 
-@section('title', 'Manajemen Penyewa · Kos XYZ')
 
-@section('content')
+<?php $__env->startSection('title', 'Manajemen Penyewa · Kos XYZ'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .header-actions-modern {
         display: flex;
@@ -265,7 +265,7 @@
         <p>Data diri, status, dan riwayat penyewa</p>
     </div>
     <div class="right">
-        <a href="{{ route('admin.penyewa.create') }}" class="btn-modern-primary">
+        <a href="<?php echo e(route('admin.penyewa.create')); ?>" class="btn-modern-primary">
             <i class="fas fa-user-plus"></i> Tambah Penyewa
         </a>
     </div>
@@ -273,17 +273,19 @@
 
 <!-- PENYEWA GRID -->
 <div class="penyewa-grid-modern">
-    @forelse($penyewas as $penyewa)
+    <?php $__empty_1 = true; $__currentLoopData = $penyewas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $penyewa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
     <div class="penyewa-card-modern">
         <!-- Header -->
         <div class="card-header">
             <div class="avatar">
-                {{ strtoupper(substr($penyewa->nama_lengkap, 0, 1)) }}
+                <?php echo e(strtoupper(substr($penyewa->nama_lengkap, 0, 1))); ?>
+
             </div>
             <div class="info">
-                <h3>{{ $penyewa->nama_lengkap }}</h3>
+                <h3><?php echo e($penyewa->nama_lengkap); ?></h3>
                 <div class="kamar">
-                    <i class="fas fa-door-open"></i> {{ $penyewa->kamar->nama ?? 'Belum ditentukan' }}
+                    <i class="fas fa-door-open"></i> <?php echo e($penyewa->kamar->nama ?? 'Belum ditentukan'); ?>
+
                 </div>
             </div>
         </div>
@@ -293,62 +295,64 @@
             <div class="detail-grid">
                 <div class="item">
                     <div class="label">No. KTP</div>
-                    <div class="value">{{ $penyewa->ktp }}</div>
+                    <div class="value"><?php echo e($penyewa->ktp); ?></div>
                 </div>
                 <div class="item">
                     <div class="label">No. HP</div>
-                    <div class="value">{{ $penyewa->no_hp }}</div>
+                    <div class="value"><?php echo e($penyewa->no_hp); ?></div>
                 </div>
                 <div class="item">
                     <div class="label">Kontak Darurat</div>
-                    <div class="value">{{ $penyewa->kontak_darurat ?? '-' }}</div>
+                    <div class="value"><?php echo e($penyewa->kontak_darurat ?? '-'); ?></div>
                 </div>
                 <div class="item">
                     <div class="label">Pekerjaan</div>
-                    <div class="value">{{ $penyewa->pekerjaan ?? '-' }}</div>
+                    <div class="value"><?php echo e($penyewa->pekerjaan ?? '-'); ?></div>
                 </div>
                 <div class="item">
                     <div class="label">Mulai Sewa</div>
-                    <div class="value">{{ $penyewa->tanggal_mulai_sewa ? \Carbon\Carbon::parse($penyewa->tanggal_mulai_sewa)->format('d/m/Y') : '-' }}</div>
+                    <div class="value"><?php echo e($penyewa->tanggal_mulai_sewa ? \Carbon\Carbon::parse($penyewa->tanggal_mulai_sewa)->format('d/m/Y') : '-'); ?></div>
                 </div>
                 <div class="item">
                     <div class="label">Berakhir Sewa</div>
-                    <div class="value">{{ $penyewa->tanggal_berakhir_sewa ? \Carbon\Carbon::parse($penyewa->tanggal_berakhir_sewa)->format('d/m/Y') : '-' }}</div>
+                    <div class="value"><?php echo e($penyewa->tanggal_berakhir_sewa ? \Carbon\Carbon::parse($penyewa->tanggal_berakhir_sewa)->format('d/m/Y') : '-'); ?></div>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
         <div class="card-footer">
-            <span class="status {{ strtolower($penyewa->status) }}">
+            <span class="status <?php echo e(strtolower($penyewa->status)); ?>">
                 <i class="fas fa-circle"></i>
-                {{ $penyewa->status }}
+                <?php echo e($penyewa->status); ?>
+
             </span>
             <div class="actions">
-                <a href="{{ route('admin.penyewa.edit', $penyewa) }}" class="btn-icon edit" title="Edit">
+                <a href="<?php echo e(route('admin.penyewa.edit', $penyewa)); ?>" class="btn-icon edit" title="Edit">
                     <i class="fas fa-edit"></i>
                 </a>
-                <form method="POST" action="{{ route('admin.penyewa.destroy', $penyewa) }}" style="display:inline;">
-                    @csrf @method('DELETE')
-                    <button type="submit" class="btn-icon delete" title="Hapus" onclick="return confirm('Yakin hapus penyewa {{ $penyewa->nama_lengkap }}?')">
+                <form method="POST" action="<?php echo e(route('admin.penyewa.destroy', $penyewa)); ?>" style="display:inline;">
+                    <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                    <button type="submit" class="btn-icon delete" title="Hapus" onclick="return confirm('Yakin hapus penyewa <?php echo e($penyewa->nama_lengkap); ?>?')">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </form>
             </div>
         </div>
     </div>
-    @empty
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
     <div class="empty-state">
         <i class="fas fa-users"></i>
         <h3>Belum ada data penyewa</h3>
         <p>Klik tombol "Tambah Penyewa" untuk menambahkan penyewa baru</p>
     </div>
-    @endforelse
+    <?php endif; ?>
 </div>
 
 <!-- Total Penyewa -->
 <div style="margin-top: 20px; padding: 12px 0; color: #94a3b8; font-size: 0.85rem; text-align: center; border-top: 1px solid #f1f5f9;">
-    <i class="fas fa-info-circle"></i> Total <strong style="color:#0f172a;">{{ $penyewas->count() }}</strong> penyewa terdaftar
+    <i class="fas fa-info-circle"></i> Total <strong style="color:#0f172a;"><?php echo e($penyewas->count()); ?></strong> penyewa terdaftar
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\kos-xyz\resources\views/admin/penyewa/index.blade.php ENDPATH**/ ?>

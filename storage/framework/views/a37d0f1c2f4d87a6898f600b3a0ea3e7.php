@@ -1,8 +1,8 @@
-@extends('layouts.admin')
 
-@section('title', 'Manajemen Kamar · Kos XYZ')
 
-@section('content')
+<?php $__env->startSection('title', 'Manajemen Kamar · Kos XYZ'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .header-actions-modern {
         display: flex;
@@ -276,7 +276,7 @@
         <p>Kelola data kamar, tarif, dan fasilitas</p>
     </div>
     <div class="right">
-        <a href="{{ route('admin.kamar.create') }}" class="btn-modern-primary">
+        <a href="<?php echo e(route('admin.kamar.create')); ?>" class="btn-modern-primary">
             <i class="fas fa-plus-circle"></i> Tambah Kamar
         </a>
     </div>
@@ -284,52 +284,53 @@
 
 <!-- KAMAR GRID -->
 <div class="kamar-grid-modern">
-    @forelse($kamars as $kamar)
+    <?php $__empty_1 = true; $__currentLoopData = $kamars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kamar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
     <div class="kamar-card-modern">
         <!-- Gambar -->
         <div class="card-image">
-            @if($kamar->gambar && file_exists(storage_path('app/public/kamar/' . $kamar->gambar)))
-                <img src="{{ asset('storage/kamar/' . $kamar->gambar) }}" alt="{{ $kamar->nama }}">
-            @else
+            <?php if($kamar->gambar && file_exists(storage_path('app/public/kamar/' . $kamar->gambar))): ?>
+                <img src="<?php echo e(asset('storage/kamar/' . $kamar->gambar)); ?>" alt="<?php echo e($kamar->nama); ?>">
+            <?php else: ?>
                 <div class="no-image">
                     <i class="fas fa-bed"></i>
                 </div>
-            @endif
+            <?php endif; ?>
         </div>
 
         <!-- Body -->
         <div class="card-body">
             <div class="card-top">
-                <span class="nama">{{ $kamar->nama }}</span>
-                <span class="harga">Rp {{ number_format($kamar->harga, 0, ',', '.') }}</span>
+                <span class="nama"><?php echo e($kamar->nama); ?></span>
+                <span class="harga">Rp <?php echo e(number_format($kamar->harga, 0, ',', '.')); ?></span>
             </div>
 
             <!-- Fasilitas -->
             <div class="fasilitas-list">
-                @php
+                <?php
                     $fasilitas = explode(',', $kamar->fasilitas ?? '');
-                @endphp
-                @foreach(array_slice($fasilitas, 0, 4) as $fas)
-                    <span class="tag"><i class="fas fa-check-circle" style="color:#b45309; font-size:0.55rem;"></i> {{ trim($fas) }}</span>
-                @endforeach
-                @if(count($fasilitas) > 4)
-                    <span class="tag">+{{ count($fasilitas) - 4 }}</span>
-                @endif
+                ?>
+                <?php $__currentLoopData = array_slice($fasilitas, 0, 4); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <span class="tag"><i class="fas fa-check-circle" style="color:#b45309; font-size:0.55rem;"></i> <?php echo e(trim($fas)); ?></span>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php if(count($fasilitas) > 4): ?>
+                    <span class="tag">+<?php echo e(count($fasilitas) - 4); ?></span>
+                <?php endif; ?>
             </div>
 
             <!-- Footer -->
             <div class="card-footer">
-                <span class="status {{ strtolower($kamar->status) }}">
+                <span class="status <?php echo e(strtolower($kamar->status)); ?>">
                     <i class="fas fa-circle"></i>
-                    {{ $kamar->status }}
+                    <?php echo e($kamar->status); ?>
+
                 </span>
                 <div class="actions">
-                    <a href="{{ route('admin.kamar.edit', $kamar) }}" class="btn-icon edit" title="Edit">
+                    <a href="<?php echo e(route('admin.kamar.edit', $kamar)); ?>" class="btn-icon edit" title="Edit">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <form method="POST" action="{{ route('admin.kamar.destroy', $kamar) }}" style="display:inline;">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="btn-icon delete" title="Hapus" onclick="return confirm('Yakin hapus kamar {{ $kamar->nama }}?')">
+                    <form method="POST" action="<?php echo e(route('admin.kamar.destroy', $kamar)); ?>" style="display:inline;">
+                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                        <button type="submit" class="btn-icon delete" title="Hapus" onclick="return confirm('Yakin hapus kamar <?php echo e($kamar->nama); ?>?')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </form>
@@ -337,18 +338,19 @@
             </div>
         </div>
     </div>
-    @empty
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
     <div class="empty-state">
         <i class="fas fa-door-open"></i>
         <h3>Belum ada data kamar</h3>
         <p>Klik tombol "Tambah Kamar" untuk menambahkan kamar baru</p>
     </div>
-    @endforelse
+    <?php endif; ?>
 </div>
 
 <!-- Total Kamar -->
 <div style="margin-top: 20px; padding: 12px 0; color: #94a3b8; font-size: 0.85rem; text-align: center; border-top: 1px solid #f1f5f9;">
-    <i class="fas fa-info-circle"></i> Total <strong style="color:#0f172a;">{{ $kamars->count() }}</strong> kamar terdaftar
+    <i class="fas fa-info-circle"></i> Total <strong style="color:#0f172a;"><?php echo e($kamars->count()); ?></strong> kamar terdaftar
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\kos-xyz\resources\views/admin/kamar/index.blade.php ENDPATH**/ ?>

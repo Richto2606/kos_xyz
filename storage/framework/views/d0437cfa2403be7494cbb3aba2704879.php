@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield('title', 'Admin · Kos XYZ')</title>
+    <title><?php echo $__env->yieldContent('title', 'Admin · Kos XYZ'); ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
@@ -42,22 +42,22 @@
     <nav class="sidebar">
         <div class="brand"><i class="fas fa-home"></i> Kos XYZ</div>
         <ul class="menu">
-            <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.dashboard')); ?>" class="<?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
                 <i class="fas fa-chart-pie"></i> Ringkasan
             </a>
-            <a href="{{ route('admin.kamar.index') }}" class="{{ request()->routeIs('admin.kamar.*') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.kamar.index')); ?>" class="<?php echo e(request()->routeIs('admin.kamar.*') ? 'active' : ''); ?>">
                 <i class="fas fa-door-open"></i> Manajemen Kamar
             </a>
-            <a href="{{ route('admin.penyewa.index') }}" class="{{ request()->routeIs('admin.penyewa.*') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.penyewa.index')); ?>" class="<?php echo e(request()->routeIs('admin.penyewa.*') ? 'active' : ''); ?>">
                 <i class="fas fa-users"></i> Manajemen Penyewa
             </a>
-            <a href="{{ route('admin.tagihan.index') }}" class="{{ request()->routeIs('admin.tagihan.*') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.tagihan.index')); ?>" class="<?php echo e(request()->routeIs('admin.tagihan.*') ? 'active' : ''); ?>">
                 <i class="fas fa-file-invoice"></i> Tagihan
             </a>
         </ul>
         <div class="logout-btn">
-            <form method="POST" action="{{ route('admin.logout') }}">
-                @csrf
+            <form method="POST" action="<?php echo e(route('admin.logout')); ?>">
+                <?php echo csrf_field(); ?>
                 <button type="submit"><i class="fas fa-sign-out-alt"></i> Keluar</button>
             </form>
         </div>
@@ -65,7 +65,7 @@
 
     <!-- MAIN CONTENT -->
     <div class="main-content">
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </div>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\kos-xyz\resources\views/layouts/admin.blade.php ENDPATH**/ ?>
