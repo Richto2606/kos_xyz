@@ -32,19 +32,10 @@ class KamarController extends Controller
 
         $data = $request->all();
 
-        // Upload gambar
         if ($request->hasFile('gambar')) {
             $image = $request->file('gambar');
             $filename = Str::slug($request->nama) . '-' . time() . '.' . $image->getClientOriginalExtension();
-            
-            // Pindahkan gambar tanpa resize (cara sederhana)
-            $image->move(storage_path('app/public/kamar/'), $filename);
-            
-            // Atau jika ingin resize, gunakan ini:
-            // $img = \Intervention\Image\ImageManager::gd()->read($image->getRealPath());
-            // $img->resize(600, 400);
-            // $img->save(storage_path('app/public/kamar/' . $filename));
-            
+            $image->storeAs('public/kamar', $filename);
             $data['gambar'] = $filename;
         }
 
@@ -70,24 +61,14 @@ class KamarController extends Controller
 
         $data = $request->all();
 
-        // Upload gambar baru
         if ($request->hasFile('gambar')) {
-            // Hapus gambar lama
             if ($kamar->gambar && file_exists(storage_path('app/public/kamar/' . $kamar->gambar))) {
                 unlink(storage_path('app/public/kamar/' . $kamar->gambar));
             }
 
             $image = $request->file('gambar');
             $filename = Str::slug($request->nama) . '-' . time() . '.' . $image->getClientOriginalExtension();
-            
-            // Pindahkan gambar tanpa resize
-            $image->move(storage_path('app/public/kamar/'), $filename);
-            
-            // Atau jika ingin resize:
-            // $img = \Intervention\Image\ImageManager::gd()->read($image->getRealPath());
-            // $img->resize(600, 400);
-            // $img->save(storage_path('app/public/kamar/' . $filename));
-            
+            $image->storeAs('public/kamar', $filename);
             $data['gambar'] = $filename;
         }
 
@@ -97,7 +78,6 @@ class KamarController extends Controller
 
     public function destroy(Kamar $kamar)
     {
-        // Hapus gambar
         if ($kamar->gambar && file_exists(storage_path('app/public/kamar/' . $kamar->gambar))) {
             unlink(storage_path('app/public/kamar/' . $kamar->gambar));
         }

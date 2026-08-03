@@ -3,18 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kamar;
+use App\Models\Artikel;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->get('search');
-        if ($search) {
-            $kamars = Kamar::where('nama', 'like', "%{$search}%")->get();
-        } else {
-            $kamars = Kamar::all();
+        $query = Kamar::query();
+
+        // ===== SEARCH =====
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('fasilitas', 'like', "%{$search}%")
+                  ->orWhere('deskripsi', 'like', "%{$search}%");
+            });
         }
+
+        // ===== FILTER STATUS =====
+        if ($request->filled('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        // ===== FILTER HARGA MIN =====
+        if ($request->filled('harga_min')) {
+            $query->where('harga', '>=', $request->harga_min);
+        }
+
+        // ===== FILTER HARGA MAX =====
+        if ($request->filled('harga_max')) {
+            $query->where('harga', '<=', $request->harga_max);
+        }
+
+        // ===== FILTER FASILITAS =====
+        if ($request->filled('fasilitas') && $request->fasilitas != '') {
+            $query->where('fasilitas', 'like', '%' . $request->fasilitas . '%');
+        }
+
+        // ===== SORTING =====
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        
+        $allowedSorts = ['nama', 'harga', 'status', 'created_at'];
+        if (in_array($sortBy, $allowedSorts)) {
+            $query->orderBy($sortBy, $sortOrder);
+        }
+
+        $kamars = $query->get();
+
+        // ===== DATA UNTUK FILTER (Dropdown) =====
+        $statuses = ['Tersedia', 'Penuh', 'Maintenance'];
+        $fasilitasList = ['AC', 'KM Dalam', 'KM Luar', 'Meja', 'Kursi', 'Lemari', 'Tempat Tidur', 'TV', 'Kipas', 'WiFi'];
 
         // ===== DATA TESTIMONI =====
         $testimonials = [
@@ -62,7 +103,13 @@ class PublicController extends Controller
             ],
         ];
 
-        return view('public.index', compact('kamars', 'testimonials', 'faqs'));
+        // ===== AMBIL 3 ARTIKEL TERBARU UNTUK LANDING PAGE =====
+        $artikels = Artikel::where('is_active', true)
+            ->orderBy('tanggal_publikasi', 'desc')
+            ->limit(3)
+            ->get();
+
+        return view('public.index', compact('kamars', 'testimonials', 'faqs', 'statuses', 'fasilitasList', 'artikels'));
     }
 
     public function kamar()
@@ -74,7 +121,37 @@ class PublicController extends Controller
     public function detailKamar($id)
     {
         $kamar = Kamar::findOrFail($id);
-        $kamars = Kamar::all(); // Untuk rekomendasi
+        $kamars = Kamar::all();
         return view('public.detail', compact('kamar', 'kamars'));
+    }
+
+    // ============================================================
+    // ===== FITUR BLOG / ARTIKEL =====
+    // ============================================================
+
+    // ===== HALAMAN BLOG =====
+    public function blog()
+    {
+        $artikels = Artikel::where('is_active', true)
+            ->orderBy('tanggal_publikasi', 'desc')
+            ->paginate(6);
+
+        return view('public.blog', compact('artikels'));
+    }
+
+    // ===== DETAIL ARTIKEL =====
+    public function detailArtikel($slug)
+    {
+        $artikel = Artikel::where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        $artikelTerbaru = Artikel::where('is_active', true)
+            ->where('id', '!=', $artikel->id)
+            ->orderBy('tanggal_publikasi', 'desc')
+            ->limit(3)
+            ->get();
+
+        return view('public.detail-artikel', compact('artikel', 'artikelTerbaru'));
     }
 }

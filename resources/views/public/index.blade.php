@@ -291,6 +291,127 @@
             background: var(--bg-primary);
         }
 
+        /* ===== FILTER SECTION ===== */
+        .filter-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px 28px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+        .filter-section:hover {
+            border-color: #fed7aa;
+        }
+        .filter-section .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 16px;
+            align-items: end;
+        }
+        .filter-section .filter-row .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .filter-section .filter-row .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .filter-section .filter-row .form-group input,
+        .filter-section .filter-row .form-group select {
+            padding: 10px 14px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .filter-section .filter-row .form-group input:focus,
+        .filter-section .filter-row .form-group select:focus {
+            outline: none;
+            border-color: #b45309;
+            box-shadow: 0 0 0 3px rgba(180,83,9,0.08);
+        }
+        .filter-section .filter-row .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+        .filter-section .filter-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .filter-section .filter-actions .btn-filter {
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .filter-section .filter-actions .btn-filter.apply {
+            background: #b45309;
+            color: white;
+        }
+        .filter-section .filter-actions .btn-filter.apply:hover {
+            background: #92400e;
+            transform: translateY(-2px);
+        }
+        .filter-section .filter-actions .btn-filter.reset {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border-color);
+        }
+        .filter-section .filter-actions .btn-filter.reset:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        /* ===== RESULT INFO ===== */
+        .result-info {
+            margin-bottom: 16px;
+            padding: 12px 18px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .result-info .text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .result-info .text strong {
+            color: var(--text-primary);
+        }
+        .result-info .clear-filter {
+            color: #b45309;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .result-info .clear-filter:hover {
+            text-decoration: underline;
+        }
+
         /* ===== SECTION TITLE ===== */
         .section-title { font-size:2rem; font-weight:700; margin:48px 0 18px; display:flex; align-items:center; gap:12px; color:var(--text-primary); }
         .section-title i { color:#b45309; }
@@ -312,32 +433,6 @@
         }
         .breadcrumb span {
             margin:0 6px;
-        }
-
-        /* ===== SEARCH FORM ===== */
-        .search-form {
-            display:flex;
-            gap:10px;
-            max-width:400px;
-            margin-bottom:24px;
-        }
-        .search-form input {
-            flex:1;
-            padding:10px 16px;
-            border:1px solid var(--border-color);
-            border-radius:12px;
-            font-size:1rem;
-            background:var(--bg-card);
-            color:var(--text-primary);
-            transition:border-color 0.2s;
-        }
-        .search-form input:focus {
-            outline:none;
-            border-color:#b45309;
-            box-shadow:0 0 0 3px rgba(180,83,9,0.1);
-        }
-        .search-form input::placeholder {
-            color:var(--text-muted);
         }
 
         /* ===== KAMAR GRID ===== */
@@ -713,6 +808,110 @@
             font-size: 0.95rem;
         }
 
+        /* ===== BLOG SECTION ===== */
+        .blog-section {
+            margin: 50px 0 30px;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .blog-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-4px);
+            border-color: #fed7aa;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .blog-card .image {
+            height: 160px;
+            background: var(--bg-primary);
+            overflow: hidden;
+        }
+        .blog-card .image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .blog-card:hover .image img {
+            transform: scale(1.05);
+        }
+        .blog-card .content {
+            padding: 16px 20px 20px;
+        }
+        .blog-card .content .kategori {
+            font-size: 0.7rem;
+            color: #b45309;
+            font-weight: 600;
+        }
+        .blog-card .content .judul {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 4px 0 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .blog-card .content .deskripsi {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .blog-card .content .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .blog-empty {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 2px dashed var(--border-color);
+        }
+        .blog-empty i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        .btn-blog {
+            display: inline-block;
+            background: #b45309;
+            color: white;
+            padding: 10px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-blog:hover {
+            background: #92400e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(180,83,9,0.25);
+        }
+
         /* ===== MAP SECTION ===== */
         .map-section {
             margin: 40px 0 30px;
@@ -913,6 +1112,33 @@
                 grid-template-columns: 1fr 1fr;
                 padding: 16px;
             }
+            .filter-section .filter-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .result-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width:500px) {
+            .filter-section .filter-row {
+                grid-template-columns: 1fr;
+            }
+            .filter-section .filter-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            .filter-section .filter-actions .btn-filter {
+                width: 100%;
+                justify-content: center;
+            }
+            .kamar-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width:700px) { 
@@ -923,7 +1149,6 @@
             .hero-text h1 { font-size:2.2rem; } 
             .section-title { font-size:1.6rem; } 
             .cta-section { flex-direction:column; gap:20px; text-align:center; }
-            .search-form { max-width:100%; }
         }
     </style>
 </head>
@@ -948,6 +1173,7 @@
                 <a href="#galeri">Galeri</a>
                 <a href="#testimoni">Testimoni</a>
                 <a href="#faq">FAQ</a>
+                <a href="{{ route('public.blog') }}">Blog</a>
                 <a href="#sejarah">Sejarah</a>
                 <a href="#lokasi">Lokasi</a>
                 <a href="https://wa.me/628123456789" class="btn-wa"><i class="fab fa-whatsapp"></i> Chat Admin</a>
@@ -1030,14 +1256,111 @@
                 <small>· semua Rp 1.000.000</small>
             </h2>
 
-            <!-- ===== SEARCH FORM ===== -->
-            <form method="GET" action="{{ route('home') }}" class="search-form">
-                <input type="text" name="search" placeholder="Cari kamar..." value="{{ request('search') }}" />
-                <button type="submit" class="btn-wa" style="background:#b45309; border:none; padding:10px 20px; border-radius:12px; color:white; font-weight:600; cursor:pointer;">
-                    <i class="fas fa-search"></i> Cari
-                </button>
-            </form>
+            <!-- ===== FILTER & SEARCH ===== -->
+            <div class="filter-section">
+                <form method="GET" action="{{ route('home') }}" id="filterForm">
+                    <div class="filter-row">
+                        <!-- Search -->
+                        <div class="form-group">
+                            <label for="search"><i class="fas fa-search"></i> Cari Kamar</label>
+                            <input type="text" id="search" name="search" placeholder="Cari nama atau fasilitas..." value="{{ request('search') }}">
+                        </div>
 
+                        <!-- Filter Status -->
+                        <div class="form-group">
+                            <label for="status"><i class="fas fa-tag"></i> Status</label>
+                            <select name="status" id="status">
+                                <option value="">Semua Status</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>{{ $status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Filter Harga Min -->
+                        <div class="form-group">
+                            <label for="harga_min"><i class="fas fa-arrow-up"></i> Harga Min</label>
+                            <input type="number" id="harga_min" name="harga_min" placeholder="Minimal" value="{{ request('harga_min') }}">
+                        </div>
+
+                        <!-- Filter Harga Max -->
+                        <div class="form-group">
+                            <label for="harga_max"><i class="fas fa-arrow-down"></i> Harga Max</label>
+                            <input type="number" id="harga_max" name="harga_max" placeholder="Maksimal" value="{{ request('harga_max') }}">
+                        </div>
+                    </div>
+
+                    <div class="filter-row" style="margin-top:12px;">
+                        <!-- Filter Fasilitas -->
+                        <div class="form-group">
+                            <label for="fasilitas"><i class="fas fa-cog"></i> Fasilitas</label>
+                            <select name="fasilitas" id="fasilitas">
+                                <option value="">Semua Fasilitas</option>
+                                @foreach($fasilitasList as $fasilitas)
+                                    <option value="{{ $fasilitas }}" {{ request('fasilitas') == $fasilitas ? 'selected' : '' }}>{{ $fasilitas }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Sorting -->
+                        <div class="form-group">
+                            <label for="sort_by"><i class="fas fa-sort"></i> Urutkan</label>
+                            <select name="sort_by" id="sort_by">
+                                <option value="created_at" {{ request('sort_by') == 'created_at' || !request('sort_by') ? 'selected' : '' }}>Terbaru</option>
+                                <option value="nama" {{ request('sort_by') == 'nama' ? 'selected' : '' }}>Nama (A-Z)</option>
+                                <option value="harga" {{ request('sort_by') == 'harga' ? 'selected' : '' }}>Harga (Termurah)</option>
+                                <option value="status" {{ request('sort_by') == 'status' ? 'selected' : '' }}>Status</option>
+                            </select>
+                        </div>
+
+                        <!-- Sort Order -->
+                        <div class="form-group">
+                            <label for="sort_order"><i class="fas fa-arrow-up-arrow-down"></i> Arah</label>
+                            <select name="sort_order" id="sort_order">
+                                <option value="asc" {{ request('sort_order') == 'asc' ? 'selected' : '' }}>Naik (A-Z)</option>
+                                <option value="desc" {{ request('sort_order') == 'desc' || !request('sort_order') ? 'selected' : '' }}>Turun (Z-A)</option>
+                            </select>
+                        </div>
+
+                        <!-- Tombol Aksi -->
+                        <div class="form-group" style="justify-content: flex-end;">
+                            <div class="filter-actions" style="margin-top:0;">
+                                <button type="submit" class="btn-filter apply">
+                                    <i class="fas fa-filter"></i> Cari
+                                </button>
+                                <a href="{{ route('home') }}" class="btn-filter reset">
+                                    <i class="fas fa-undo"></i> Reset
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ===== RESULT INFO ===== -->
+            @if(request()->anyFilled(['search', 'status', 'harga_min', 'harga_max', 'fasilitas']))
+            <div class="result-info">
+                <span class="text">
+                    <i class="fas fa-search"></i> Hasil pencarian:
+                    @if(request('search')) <strong>"{{ request('search') }}"</strong> @endif
+                    @if(request('status')) <span style="margin-left:8px;">| Status: <strong>{{ request('status') }}</strong></span> @endif
+                    @if(request('harga_min') || request('harga_max')) 
+                        <span style="margin-left:8px;">| Harga: <strong>
+                            @if(request('harga_min')) Rp {{ number_format(request('harga_min'), 0, ',', '.') }} @endif
+                            @if(request('harga_min') && request('harga_max')) - @endif
+                            @if(request('harga_max')) Rp {{ number_format(request('harga_max'), 0, ',', '.') }} @endif
+                        </strong></span>
+                    @endif
+                    @if(request('fasilitas')) <span style="margin-left:8px;">| Fasilitas: <strong>{{ request('fasilitas') }}</strong></span> @endif
+                    <span style="margin-left:12px; font-weight:600; color:var(--text-primary);">{{ $kamars->count() }} kamar ditemukan</span>
+                </span>
+                <a href="{{ route('home') }}" class="clear-filter">
+                    <i class="fas fa-times"></i> Hapus Filter
+                </a>
+            </div>
+            @endif
+
+            <!-- ===== KAMAR GRID ===== -->
             <div class="kamar-grid">
                 @forelse($kamars as $kamar)
                 <div class="kamar-card">
@@ -1250,6 +1573,49 @@
             </div>
             <a href="https://wa.me/628123456789" class="btn-wa-large"><i class="fab fa-whatsapp"></i> Chat Admin</a>
         </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== BLOG / ARTIKEL ===== -->
+        <!-- ============================================================ -->
+        <section class="blog-section reveal" id="blog">
+            <h2 class="section-title">
+                <i class="fas fa-newspaper" style="color:#b45309;"></i> Blog & Artikel
+                <small style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">· Tips & info menarik</small>
+            </h2>
+
+            <div class="blog-grid">
+                @forelse($artikels ?? [] as $artikel)
+                <a href="{{ route('public.artikel.detail', $artikel->slug) }}" class="blog-card">
+                    <div class="image">
+                        <img src="{{ $artikel->gambar_url }}" alt="{{ $artikel->judul }}">
+                    </div>
+                    <div class="content">
+                        <span class="kategori">{{ $artikel->kategori }}</span>
+                        <div class="judul">{{ $artikel->judul }}</div>
+                        <div class="deskripsi">{{ $artikel->deskripsi_singkat ?? strip_tags(substr($artikel->isi, 0, 100)) }}</div>
+                        <div class="meta">
+                            <span><i class="fas fa-user"></i> {{ $artikel->penulis }}</span>
+                            <span><i class="far fa-calendar-alt"></i> {{ $artikel->tanggal_publikasi->format('d M Y') }}</span>
+                        </div>
+                    </div>
+                </a>
+                @empty
+                <div class="blog-empty">
+                    <i class="fas fa-newspaper"></i>
+                    <p>Belum ada artikel</p>
+                </div>
+                @endforelse
+            </div>
+
+            @if(isset($artikels) && $artikels->count() > 0)
+            <div style="text-align:center; margin-top:20px;">
+                <a href="{{ route('public.blog') }}" class="btn-blog">
+                    Lihat Semua Artikel <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            @endif
+        </section>
+        <!-- ============================================================ -->
 
         <!-- ===== MAP LOKASI ===== -->
         <section class="map-section reveal" id="lokasi">

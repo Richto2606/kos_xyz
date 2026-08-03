@@ -47,36 +47,14 @@
         align-items: center;
         gap: 8px;
         text-decoration: none;
-        box-shadow: 0 4px 14px rgba(180, 83, 9, 0.25);
+        box-shadow: 0 4px 14px rgba(180,83,9,0.25);
     }
     .btn-modern-primary:hover {
         background: #92400e;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(180, 83, 9, 0.35);
+        box-shadow: 0 6px 20px rgba(180,83,9,0.35);
     }
 
-    .btn-modern-outline {
-        background: transparent;
-        color: #64748b;
-        border: 1.5px solid #e2e8f0;
-        padding: 8px 18px;
-        border-radius: 10px;
-        font-weight: 500;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        text-decoration: none;
-    }
-    .btn-modern-outline:hover {
-        border-color: #b45309;
-        color: #b45309;
-        background: #fef3c7;
-    }
-
-    /* Kamar Grid */
     .kamar-grid-modern {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -85,9 +63,9 @@
     }
 
     .kamar-card-modern {
-        background: white;
+        background: var(--bg-card);
         border-radius: 20px;
-        border: 1px solid #f1f5f9;
+        border: 1px solid var(--border-color);
         overflow: hidden;
         transition: all 0.3s ease;
         box-shadow: 0 2px 8px rgba(0,0,0,0.02);
@@ -100,7 +78,7 @@
 
     .kamar-card-modern .card-image {
         height: 160px;
-        background: #f1f5f9;
+        background: var(--bg-primary);
         position: relative;
         overflow: hidden;
     }
@@ -110,17 +88,14 @@
         object-fit: cover;
         transition: transform 0.4s ease;
     }
-    .kamar-card-modern:hover .card-image img {
-        transform: scale(1.05);
-    }
     .kamar-card-modern .card-image .no-image {
         display: flex;
         align-items: center;
         justify-content: center;
         height: 100%;
-        color: #94a3b8;
+        color: var(--text-muted);
         font-size: 3rem;
-        background: #f8fafc;
+        background: var(--bg-primary);
     }
 
     .kamar-card-modern .card-body {
@@ -135,7 +110,7 @@
     .kamar-card-modern .card-body .card-top .nama {
         font-size: 1.2rem;
         font-weight: 700;
-        color: #0f172a;
+        color: var(--text-primary);
     }
     .kamar-card-modern .card-body .card-top .harga {
         font-weight: 700;
@@ -153,12 +128,12 @@
         margin: 10px 0 12px;
     }
     .kamar-card-modern .card-body .fasilitas-list .tag {
-        background: #f8fafc;
+        background: var(--bg-primary);
         padding: 3px 12px;
         border-radius: 20px;
         font-size: 0.7rem;
-        color: #475569;
-        border: 1px solid #f1f5f9;
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
     }
 
     .kamar-card-modern .card-body .card-footer {
@@ -166,7 +141,7 @@
         justify-content: space-between;
         align-items: center;
         padding-top: 14px;
-        border-top: 1px solid #f1f5f9;
+        border-top: 1px solid var(--border-color);
     }
     .kamar-card-modern .card-body .card-footer .status {
         display: inline-flex;
@@ -177,21 +152,10 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    .kamar-card-modern .card-body .card-footer .status.tersedia {
-        background: #dcfce7;
-        color: #15803d;
-    }
-    .kamar-card-modern .card-body .card-footer .status.penuh {
-        background: #fee2e2;
-        color: #b91c1c;
-    }
-    .kamar-card-modern .card-body .card-footer .status.maintenance {
-        background: #fef9c3;
-        color: #a16207;
-    }
-    .kamar-card-modern .card-body .card-footer .status i {
-        font-size: 0.6rem;
-    }
+    .kamar-card-modern .card-body .card-footer .status.tersedia { background: #dcfce7; color: #15803d; }
+    .kamar-card-modern .card-body .card-footer .status.penuh { background: #fee2e2; color: #b91c1c; }
+    .kamar-card-modern .card-body .card-footer .status.maintenance { background: #fef9c3; color: #a16207; }
+    .kamar-card-modern .card-body .card-footer .status i { font-size: 0.6rem; }
 
     .kamar-card-modern .card-body .card-footer .actions {
         display: flex;
@@ -230,23 +194,23 @@
         grid-column: 1 / -1;
         text-align: center;
         padding: 60px 20px;
-        background: white;
+        background: var(--bg-card);
         border-radius: 20px;
-        border: 2px dashed #e2e8f0;
+        border: 2px dashed var(--border-color);
     }
     .empty-state i {
         font-size: 3rem;
-        color: #cbd5e1;
+        color: var(--text-muted);
         display: block;
         margin-bottom: 16px;
     }
     .empty-state h3 {
         font-size: 1.2rem;
-        color: #475569;
+        color: var(--text-secondary);
         margin-bottom: 6px;
     }
     .empty-state p {
-        color: #94a3b8;
+        color: var(--text-muted);
         font-size: 0.95rem;
     }
 
@@ -258,13 +222,6 @@
     @media (max-width: 500px) {
         .kamar-grid-modern {
             grid-template-columns: 1fr;
-        }
-        .header-actions-modern .right {
-            width: 100%;
-        }
-        .header-actions-modern .right .btn-modern-primary {
-            width: 100%;
-            justify-content: center;
         }
     }
 </style>
@@ -286,7 +243,6 @@
 <div class="kamar-grid-modern">
     <?php $__empty_1 = true; $__currentLoopData = $kamars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kamar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
     <div class="kamar-card-modern">
-        <!-- Gambar -->
         <div class="card-image">
             <?php if($kamar->gambar && file_exists(storage_path('app/public/kamar/' . $kamar->gambar))): ?>
                 <img src="<?php echo e(asset('storage/kamar/' . $kamar->gambar)); ?>" alt="<?php echo e($kamar->nama); ?>">
@@ -296,28 +252,24 @@
                 </div>
             <?php endif; ?>
         </div>
-
-        <!-- Body -->
         <div class="card-body">
             <div class="card-top">
                 <span class="nama"><?php echo e($kamar->nama); ?></span>
                 <span class="harga">Rp <?php echo e(number_format($kamar->harga, 0, ',', '.')); ?></span>
             </div>
-
-            <!-- Fasilitas -->
             <div class="fasilitas-list">
                 <?php
                     $fasilitas = explode(',', $kamar->fasilitas ?? '');
                 ?>
                 <?php $__currentLoopData = array_slice($fasilitas, 0, 4); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <span class="tag"><i class="fas fa-check-circle" style="color:#b45309; font-size:0.55rem;"></i> <?php echo e(trim($fas)); ?></span>
+                    <?php if(trim($fas)): ?>
+                        <span class="tag"><i class="fas fa-check-circle" style="color:#b45309; font-size:0.55rem;"></i> <?php echo e(trim($fas)); ?></span>
+                    <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php if(count($fasilitas) > 4): ?>
                     <span class="tag">+<?php echo e(count($fasilitas) - 4); ?></span>
                 <?php endif; ?>
             </div>
-
-            <!-- Footer -->
             <div class="card-footer">
                 <span class="status <?php echo e(strtolower($kamar->status)); ?>">
                     <i class="fas fa-circle"></i>
@@ -348,8 +300,8 @@
 </div>
 
 <!-- Total Kamar -->
-<div style="margin-top: 20px; padding: 12px 0; color: #94a3b8; font-size: 0.85rem; text-align: center; border-top: 1px solid #f1f5f9;">
-    <i class="fas fa-info-circle"></i> Total <strong style="color:#0f172a;"><?php echo e($kamars->count()); ?></strong> kamar terdaftar
+<div style="margin-top: 20px; padding: 12px 0; color: var(--text-muted); font-size: 0.85rem; text-align: center; border-top: 1px solid var(--border-color);">
+    <i class="fas fa-info-circle"></i> Total <strong style="color:var(--text-primary);"><?php echo e($kamars->count()); ?></strong> kamar terdaftar
 </div>
 
 <?php $__env->stopSection(); ?>

@@ -97,12 +97,15 @@ class DashboardController extends Controller
             ],
         ];
 
+        // ===== HITUNG JUMLAH NOTIFIKASI (TAMBAHKAN INI) =====
+        $notifikasiCount = count($notifikasi);
+
         return view('admin.dashboard', compact(
             'totalKamar', 'tersedia', 'terisi', 'maintenance',
             'kamars',
             'lunas', 'belum', 'tunggak',
             'pendapatanBulan', 'pendapatanTahunan',
-            'notifikasi', 'aktivitas'
+            'notifikasi', 'aktivitas', 'notifikasiCount' // <- TAMBAHKAN notifikasiCount
         ));
     }
 }

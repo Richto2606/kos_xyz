@@ -11,6 +11,12 @@ class Tagihan extends Model
         'biaya_tambahan', 'keterangan_tambahan', 'status', 'jatuh_tempo', 'tanggal_bayar'
     ];
 
+    // ===== TAMBAHKAN INI =====
+    protected $casts = [
+        'jatuh_tempo' => 'date',
+        'tanggal_bayar' => 'date',
+    ];
+
     public function penyewa()
     {
         return $this->belongsTo(Penyewa::class);

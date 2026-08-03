@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\TagihanController;
-use App\Http\Controllers\ExportController; // <- TAMBAHKAN INI
+use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/kamar', [PublicController::class, 'kamar'])->name('public.kamar');
 Route::get('/kamar/{id}', [PublicController::class, 'detailKamar'])->name('public.kamar.detail');
+
+// ===== ROUTE BLOG / ARTIKEL =====
+Route::get('/blog', [PublicController::class, 'blog'])->name('public.blog');
+Route::get('/blog/{slug}', [PublicController::class, 'detailArtikel'])->name('public.artikel.detail');
 
 // ============================================================
 // ============= ROUTE ADMIN ===================================
@@ -48,7 +52,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/notifikasi/email', [AdminController::class, 'kirimEmail'])->name('notifikasi.email');
         Route::post('/notifikasi/reminder', [AdminController::class, 'kirimReminder'])->name('notifikasi.reminder');
 
-        // ----- EXPORT (di dalam middleware agar hanya admin yang bisa akses) -----
+        // ----- EXPORT -----
         Route::get('/export/pdf', [ExportController::class, 'exportPDF'])->name('export.pdf');
         Route::get('/export/excel', [ExportController::class, 'exportExcel'])->name('export.excel');
     });
@@ -57,13 +61,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // ============================================================
 // ============= ROUTE TEST (UNTUK DEBUG) =====================
 // ============================================================
+// HAPUS SEMUA ROUTE TEST INI SAAT DEPLOY KE PRODUCTION!
+// Atau komentari dengan /* ... */
 
-// Test sederhana - cek Laravel berfungsi
+/*
 Route::get('/test-simple', function () {
     return '<h1 style="color:green;">✅ Laravel berfungsi!</h1>';
 });
 
-// Test dashboard direct - cek data JSON
 Route::get('/test-dashboard-direct', function () {
     try {
         $kamars = App\Models\Kamar::all();
@@ -101,13 +106,11 @@ Route::get('/test-dashboard-direct', function () {
     }
 });
 
-// Test layout - cek apakah layout admin berfungsi
 Route::get('/test-layout', function () {
     $totalKamar = App\Models\Kamar::count();
     return view('admin.dashboard-test-layout', ['totalKamar' => $totalKamar]);
 });
 
-// Test dashboard simple - cek view dashboard
 Route::get('/test-dashboard-simple', function () {
     try {
         $totalKamar = App\Models\Kamar::count();
@@ -118,3 +121,11 @@ Route::get('/test-dashboard-simple', function () {
 })->name('test.dashboard');
 
 Route::get('/test-excel', [ExportController::class, 'exportExcelTest']);
+*/
+
+// ============================================================
+// ============= FALLBACK ROUTE (404) ==========================
+// ============================================================
+Route::fallback(function () {
+    return view('errors.404');
+});
