@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- ===== META TAG UNTUK SEO (Update #7) ===== -->
+    <!-- ===== META TAG UNTUK SEO ===== -->
     <title>Kos XYZ · Yogyakarta - Tempat Tinggal Nyaman & Strategis</title>
     <meta name="description" content="Kos XYZ Yogyakarta - Tempat tinggal nyaman, dekat kampus, dengan fasilitas lengkap. Kamar mulai Rp 1.000.000/bulan. Tersedia AC, WiFi, CCTV 24 jam." />
     <meta name="keywords" content="kos yogyakarta, kos murah, kos dekat kampus, tempat tinggal mahasiswa, kos kaliurang, kos sleman" />
@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     
     <style>
-        /* ===== CSS VARIABLES UNTUK DARK MODE (Update #8) ===== */
+        /* ===== CSS VARIABLES UNTUK DARK MODE ===== */
         :root {
             --bg-primary: #f8fafc;
             --bg-card: #ffffff;
@@ -59,6 +59,197 @@
             transition: background var(--transition-speed), color var(--transition-speed);
         }
         .container { max-width:1200px; margin:0 auto; padding:0 20px; }
+
+        /* ===== LOADING ANIMATION ===== */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #loader-wrapper.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid #b45309;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loader-text {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ===== SMOOTH SCROLL ===== */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ===== TYPING EFFECT ===== */
+        .typing-text {
+            border-right: 3px solid #b45309;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #b45309; }
+        }
+        @media (max-width: 600px) {
+            .typing-text {
+                white-space: normal;
+                border-right: none;
+            }
+        }
+
+        /* ===== REVEAL ON SCROLL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== VIDEO HERO ===== */
+        .hero-video-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            border-radius: 32px;
+        }
+        .hero-video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-video-wrapper .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            z-index: 2;
+        }
+        .hero-fallback-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* ===== VIDEO CONTROLS ===== */
+        .video-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 24px;
+            z-index: 4;
+            display: flex;
+            gap: 8px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        .video-controls:hover {
+            opacity: 1 !important;
+        }
+        .video-controls button {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        .video-controls button:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05);
+        }
+
+        /* ===== HERO ===== */
+        .hero { 
+            border-radius:32px; 
+            margin:28px 0 36px; 
+            padding:0;
+            display:flex; 
+            flex-wrap:wrap; 
+            align-items:center; 
+            justify-content:space-between;
+            transition: background var(--transition-speed);
+            border: 1px solid var(--border-color);
+            min-height: 420px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .hero-text { flex:1 1 100%; position:relative; z-index:2; }
+        .hero-text h1 { font-size:2.7rem; font-weight:800; line-height:1.2; color:white; text-shadow:0 2px 20px rgba(0,0,0,0.3); }
+        .hero-text h1 i { color:#fbbf24; }
+        .hero-text .sub { font-size:1.1rem; margin-top:10px; color:#e2e8f0; display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; text-shadow:0 1px 10px rgba(0,0,0,0.3); }
+        .hero-text .sub i { color:#fbbf24; width:22px; }
+        .hero-text .address { margin-top:10px; background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); color:white; padding:8px 20px; border-radius:60px; display:inline-block; font-weight:500; border:1px solid rgba(255,255,255,0.2); text-shadow:0 1px 10px rgba(0,0,0,0.3); }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.9);
+            color: #0f172a;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 12px;
+        }
+        .hero-badge i { margin-right:4px; }
 
         /* ===== NAVBAR ===== */
         .navbar { 
@@ -100,34 +291,12 @@
             background: var(--bg-primary);
         }
 
-        /* ===== HERO ===== */
-        .hero { 
-            background: var(--bg-hero); 
-            border-radius:32px; 
-            margin:28px 0 36px; 
-            padding:44px 36px; 
-            display:flex; 
-            flex-wrap:wrap; 
-            align-items:center; 
-            justify-content:space-between;
-            transition: background var(--transition-speed);
-            border: 1px solid var(--border-color);
-        }
-        .hero-text { flex:1 1 260px; }
-        .hero-text h1 { font-size:2.7rem; font-weight:800; line-height:1.2; color:var(--text-primary); }
-        .hero-text h1 i { color:#b45309; }
-        .hero-text .sub { font-size:1.1rem; margin-top:10px; color:var(--text-secondary); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-        .hero-text .sub i { color:#b45309; width:22px; }
-        .hero-text .address { margin-top:10px; background:var(--bg-card); padding:8px 20px; border-radius:60px; display:inline-block; font-weight:500; color:var(--text-primary); border:1px solid var(--border-color); }
-        .hero-map { flex:1 1 280px; min-height:180px; background:#e2e8f0; border-radius:20px; overflow:hidden; }
-        .hero-map iframe { width:100%; height:100%; min-height:180px; border:0; }
-
         /* ===== SECTION TITLE ===== */
         .section-title { font-size:2rem; font-weight:700; margin:48px 0 18px; display:flex; align-items:center; gap:12px; color:var(--text-primary); }
         .section-title i { color:#b45309; }
         .section-title small { font-size:0.9rem; font-weight:400; color:var(--text-muted); }
 
-        /* ===== BREADCRUMB (Update #6) ===== */
+        /* ===== BREADCRUMB ===== */
         .breadcrumb {
             font-size:0.9rem;
             color:var(--text-muted);
@@ -145,7 +314,7 @@
             margin:0 6px;
         }
 
-        /* ===== SEARCH FORM (Update #5) ===== */
+        /* ===== SEARCH FORM ===== */
         .search-form {
             display:flex;
             gap:10px;
@@ -216,19 +385,6 @@
             transform:scale(1.05);
         }
 
-        /* ===== LOADING SKELETON (Update #3) ===== */
-        .skeleton {
-            background: var(--bg-primary);
-            background: linear-gradient(90deg, var(--bg-primary) 25%, var(--border-color) 50%, var(--bg-primary) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius:8px;
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
         .kamar-card .nama-kamar { font-weight:700; font-size:1.4rem; }
         .kamar-card .harga { font-weight:700; color:#b45309; font-size:1.25rem; background:#fef3c7; padding:0 12px; border-radius:40px; display:inline-block; }
         .kamar-card .deskripsi { font-size:0.92rem; color:var(--text-secondary); margin:10px 0 8px; line-height:1.4; }
@@ -241,7 +397,7 @@
         .badge-danger { background:#fee2e2; color:#b91c1c; }
         .badge-warning { background:#fef9c3; color:#a16207; }
 
-        /* ===== TOMBOL DETAIL (Update #4) ===== */
+        /* ===== TOMBOL DETAIL ===== */
         .btn-detail {
             display:inline-block;
             margin-top:12px;
@@ -285,7 +441,7 @@
         .sejarah p { color:var(--text-secondary); font-size:1.02rem; line-height:1.7; max-width:800px; }
         .sejarah .highlight { background:#fef3c7; padding:2px 10px; border-radius:40px; font-weight:500; color:#92400e; }
 
-        /* ===== GALERI (Update #9) ===== */
+        /* ===== GALERI ===== */
         .gallery-section {
             margin: 40px 0;
         }
@@ -557,6 +713,99 @@
             font-size: 0.95rem;
         }
 
+        /* ===== MAP SECTION ===== */
+        .map-section {
+            margin: 40px 0 30px;
+        }
+        .map-wrapper {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        }
+        .map-wrapper:hover {
+            border-color: #fed7aa;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            min-height: 300px;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            border: 0;
+        }
+        .map-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 14px 22px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 280px;
+        }
+        .map-overlay .title {
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .map-overlay .title i { color: #fbbf24; }
+        .map-overlay .address {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            margin-top: 4px;
+        }
+        .map-overlay .address i { color: #fbbf24; margin-right: 4px; }
+
+        .map-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            padding: 20px 24px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+        }
+        .map-info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .map-info-item .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .map-info-item .icon.orange { background: #fef3c7; color: #b45309; }
+        .map-info-item .icon.blue { background: #dbeafe; color: #2563eb; }
+        .map-info-item .icon.green { background: #dcfce7; color: #16a34a; }
+        .map-info-item .icon.yellow { background: #fef9c3; color: #b45309; }
+        .map-info-item .info .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .map-info-item .info .value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
         /* ===== CTA SECTION ===== */
         .cta-section { 
             background:#0f172a; 
@@ -587,7 +836,7 @@
         }
         .cta-section .btn-wa-large:hover { background:#1ebe57; transform:scale(1.02); }
 
-        /* ===== FOOTER (Update #2) ===== */
+        /* ===== FOOTER ===== */
         footer { 
             text-align:center; 
             padding:36px 0 24px; 
@@ -606,17 +855,6 @@
         footer .admin-link:hover {
             color:#92400e;
             text-decoration:underline;
-        }
-
-        /* ===== ANIMASI FADE IN (Update #1) ===== */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         @media (max-width: 600px) {
@@ -642,13 +880,46 @@
             .testimoni-grid {
                 grid-template-columns: 1fr;
             }
+            .hero-content {
+                padding: 30px 20px;
+            }
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            .video-controls {
+                bottom: 10px;
+                right: 14px;
+            }
+            .video-controls button {
+                width: 30px;
+                height: 30px;
+                font-size: 0.7rem;
+            }
+            .map-container {
+                height: 250px;
+            }
+            .map-container iframe {
+                min-height: 250px;
+            }
+            .map-overlay {
+                bottom: 10px;
+                left: 10px;
+                padding: 10px 16px;
+                max-width: 200px;
+            }
+            .map-overlay .title { font-size: 0.85rem; }
+            .map-overlay .address { font-size: 0.7rem; }
+            .map-info-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 16px;
+            }
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width:700px) { 
             .navbar .container { flex-direction:column; gap:12px; } 
             .nav-links { justify-content:center; gap:16px; } 
-            .hero { padding:28px 18px; flex-direction:column; } 
+            .hero { padding:0; flex-direction:column; } 
+            .hero-content { flex-direction:column; } 
             .hero-text h1 { font-size:2.2rem; } 
             .section-title { font-size:1.6rem; } 
             .cta-section { flex-direction:column; gap:20px; text-align:center; }
@@ -657,6 +928,12 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== LOADING SCREEN ===== -->
+    <div id="loader-wrapper">
+        <div class="loader"></div>
+        <div class="loader-text">Memuat Kos XYZ...</div>
+    </div>
 
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
@@ -672,8 +949,9 @@
                 <a href="#testimoni">Testimoni</a>
                 <a href="#faq">FAQ</a>
                 <a href="#sejarah">Sejarah</a>
+                <a href="#lokasi">Lokasi</a>
                 <a href="https://wa.me/628123456789" class="btn-wa"><i class="fab fa-whatsapp"></i> Chat Admin</a>
-                <!-- ===== DARK MODE TOGGLE (Update #8) ===== -->
+                <!-- ===== DARK MODE TOGGLE ===== -->
                 <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
                     <i class="fas fa-moon"></i> <span id="themeLabel">Mode Gelap</span>
                 </button>
@@ -683,30 +961,60 @@
 
     <div class="container">
 
-        <!-- ===== HERO ===== -->
-        <section class="hero fade-in">
-            <div class="hero-text">
-                <h1><i class="fas fa-map-pin"></i> Kos XYZ <br />Yogyakarta</h1>
-                <div class="sub">
-                    <i class="fas fa-map-marker-alt"></i> Jl. Kaliurang KM 5, Sleman, Yogyakarta
-                </div>
-                <div class="address">
-                    <i class="fas fa-tag"></i> Harga kamar Rp 1.000.000 / bulan
-                </div>
-                <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
-                    <span style="background:var(--bg-card); padding:4px 16px; border-radius:40px; border:1px solid var(--border-color); color:var(--text-primary);">☀️ AC</span>
-                    <span style="background:var(--bg-card); padding:4px 16px; border-radius:40px; border:1px solid var(--border-color); color:var(--text-primary);">🛏️ Tempat tidur</span>
-                    <span style="background:var(--bg-card); padding:4px 16px; border-radius:40px; border:1px solid var(--border-color); color:var(--text-primary);">📶 WiFi 100Mbps</span>
-                </div>
+        <!-- ===== HERO DENGAN VIDEO BACKGROUND ===== -->
+        <section class="hero">
+
+            <!-- ===== VIDEO WRAPPER ===== -->
+            <div class="hero-video-wrapper">
+                <!-- Video Background -->
+                <video id="heroVideo" autoplay muted loop playsinline poster="<?php echo e(asset('images/hero-poster.jpg')); ?>">
+                    <source src="<?php echo e(asset('videos/hero-bg.mp4')); ?>" type="video/mp4">
+                    <!-- Fallback Image jika video tidak support -->
+                    <img src="<?php echo e(asset('images/alexandra-gorn-JIUjvqe2ZHg-unsplash.jpg')); ?>" alt="Kos XYZ" class="hero-fallback-image">
+                </video>
+                <!-- Overlay -->
+                <div class="overlay"></div>
             </div>
-            <div class="hero-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63234.69101507878!2d110.35147820567435!3d-7.747417226056027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5787a34c416b%3A0x7a895d957daef76a!2sYogyakarta!5e0!3m2!1sid!2sid!4v1712987654321" allowfullscreen="" loading="lazy"></iframe>
+
+            <!-- ===== VIDEO CONTROLS ===== -->
+            <div class="video-controls">
+                <button onclick="toggleVideoMute()" id="muteBtn" title="Mute/Unmute">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <button onclick="toggleVideoPlay()" id="playBtn" title="Play/Pause">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+
+            <!-- ===== HERO CONTENT ===== -->
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <i class="fas fa-star"></i> Kamar Unggulan
+                    </div>
+
+                    <h1>
+                        <i class="fas fa-map-pin"></i> 
+                        <span class="typing-text" id="typing-text"></span>
+                    </h1>
+                    <div class="sub">
+                        <i class="fas fa-map-marker-alt"></i> Jl. Kaliurang KM 5, Sleman, Yogyakarta
+                    </div>
+                    <div class="address">
+                        <i class="fas fa-tag"></i> Harga kamar Rp 1.000.000 / bulan
+                    </div>
+                    <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+                        <span style="background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); padding:4px 16px; border-radius:40px; border:1px solid rgba(255,255,255,0.2); color:white; text-shadow:0 1px 10px rgba(0,0,0,0.3);">☀️ AC</span>
+                        <span style="background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); padding:4px 16px; border-radius:40px; border:1px solid rgba(255,255,255,0.2); color:white; text-shadow:0 1px 10px rgba(0,0,0,0.3);">🛏️ Tempat tidur</span>
+                        <span style="background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); padding:4px 16px; border-radius:40px; border:1px solid rgba(255,255,255,0.2); color:white; text-shadow:0 1px 10px rgba(0,0,0,0.3);">📶 WiFi 100Mbps</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- ===== KAMAR & HARGA ===== -->
-        <div class="fade-in">
-            <!-- ===== BREADCRUMB (Update #6) ===== -->
+        <div class="reveal" id="kamar">
+            <!-- ===== BREADCRUMB ===== -->
             <nav class="breadcrumb">
                 <a href="<?php echo e(route('home')); ?>"><i class="fas fa-home"></i> Beranda</a>
                 <span>/</span>
@@ -717,12 +1025,12 @@
                 <?php endif; ?>
             </nav>
 
-            <h2 class="section-title" id="kamar">
+            <h2 class="section-title">
                 <i class="fas fa-door-open"></i> Kamar & Harga 
                 <small>· semua Rp 1.000.000</small>
             </h2>
 
-            <!-- ===== SEARCH FORM (Update #5) ===== -->
+            <!-- ===== SEARCH FORM ===== -->
             <form method="GET" action="<?php echo e(route('home')); ?>" class="search-form">
                 <input type="text" name="search" placeholder="Cari kamar..." value="<?php echo e(request('search')); ?>" />
                 <button type="submit" class="btn-wa" style="background:#b45309; border:none; padding:10px 20px; border-radius:12px; color:white; font-weight:600; cursor:pointer;">
@@ -765,7 +1073,7 @@
                         <span><i class="fas fa-check-circle"></i> <?php echo e(trim($fas)); ?></span>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
-                    <!-- ===== TOMBOL DETAIL (Update #4) ===== -->
+                    <!-- ===== TOMBOL DETAIL ===== -->
                     <a href="<?php echo e(route('public.kamar.detail', $kamar->id)); ?>" class="btn-detail">
                         Lihat Detail <i class="fas fa-arrow-right"></i>
                     </a>
@@ -783,18 +1091,20 @@
         </div>
 
         <!-- ===== FASILITAS UMUM ===== -->
-        <h2 class="section-title fade-in" id="fasilitas"><i class="fas fa-concierge-bell"></i> Fasilitas Umum</h2>
-        <div class="fasilitas-umum fade-in">
-            <div class="item"><i class="fas fa-utensils"></i> Dapur bersama</div>
-            <div class="item"><i class="fas fa-wifi"></i> WiFi 100 Mbps</div>
-            <div class="item"><i class="fas fa-parking"></i> Parkir luas</div>
-            <div class="item"><i class="fas fa-video"></i> CCTV 24 jam</div>
-            <div class="item"><i class="fas fa-tint"></i> Ruang cuci</div>
-            <div class="item"><i class="fas fa-shield-alt"></i> Keamanan 24 jam</div>
+        <div class="reveal" id="fasilitas">
+            <h2 class="section-title"><i class="fas fa-concierge-bell"></i> Fasilitas Umum</h2>
+            <div class="fasilitas-umum">
+                <div class="item"><i class="fas fa-utensils"></i> Dapur bersama</div>
+                <div class="item"><i class="fas fa-wifi"></i> WiFi 100 Mbps</div>
+                <div class="item"><i class="fas fa-parking"></i> Parkir luas</div>
+                <div class="item"><i class="fas fa-video"></i> CCTV 24 jam</div>
+                <div class="item"><i class="fas fa-tint"></i> Ruang cuci</div>
+                <div class="item"><i class="fas fa-shield-alt"></i> Keamanan 24 jam</div>
+            </div>
         </div>
 
-        <!-- ===== GALERI FOTO (Update #9) ===== -->
-        <section class="gallery-section fade-in" id="galeri">
+        <!-- ===== GALERI FOTO ===== -->
+        <section class="gallery-section reveal" id="galeri">
             <h2 class="section-title">
                 <i class="fas fa-images" style="color:#b45309;"></i> Galeri Kos XYZ
                 <small style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">· Suasana nyaman & asri</small>
@@ -811,7 +1121,6 @@
                             ];
                         }
                     }
-                    // Ambil 6 gambar pertama
                     $galleryImages = array_slice($galleryImages, 0, 6);
                 ?>
 
@@ -848,7 +1157,7 @@
         </div>
 
         <!-- ===== TESTIMONI PENYEWA ===== -->
-        <section class="testimoni-section fade-in" id="testimoni">
+        <section class="testimoni-section reveal" id="testimoni">
             <h2 class="section-title">
                 <i class="fas fa-comment-dots" style="color:#b45309;"></i> Testimoni Penyewa
                 <small style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">· Apa kata mereka</small>
@@ -893,7 +1202,7 @@
         </section>
 
         <!-- ===== FAQ ===== -->
-        <section class="faq-section fade-in" id="faq">
+        <section class="faq-section reveal" id="faq">
             <h2 class="section-title">
                 <i class="fas fa-circle-question" style="color:#b45309;"></i> Pertanyaan Umum (FAQ)
                 <small style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">· Yang sering ditanyakan</small>
@@ -923,7 +1232,7 @@
         </section>
 
         <!-- ===== SEJARAH ===== -->
-        <div class="sejarah fade-in" id="sejarah">
+        <div class="sejarah reveal" id="sejarah">
             <h3><i class="fas fa-landmark"></i> Sejarah Kos XYZ</h3>
             <p>
                 <span class="highlight">Kos XYZ</span> berdiri sejak tahun 1998 sebagai salah satu asrama mahasiswa pertama di kawasan Kaliurang. 
@@ -939,13 +1248,74 @@
         </div>
 
         <!-- ===== CTA ===== -->
-        <div class="cta-section fade-in" id="kontak">
+        <div class="cta-section reveal" id="kontak">
             <div>
                 <h3><i class="fas fa-phone-alt" style="margin-right:12px;"></i>Hubungi Kami</h3>
                 <p>Butuh info ketersediaan, mau booking, atau sekedar tanya? Chat langsung via WhatsApp.</p>
             </div>
             <a href="https://wa.me/628123456789" class="btn-wa-large"><i class="fab fa-whatsapp"></i> Chat Admin</a>
         </div>
+
+        <!-- ===== MAP LOKASI ===== -->
+        <section class="map-section reveal" id="lokasi">
+            <h2 class="section-title">
+                <i class="fas fa-map-marked-alt" style="color:#b45309;"></i> Lokasi Kos XYZ
+                <small style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">· Temukan kami di sini</small>
+            </h2>
+
+            <div class="map-wrapper">
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63234.69101507878!2d110.35147820567435!3d-7.747417226056027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5787a34c416b%3A0x7a895d957daef76a!2sYogyakarta!5e0!3m2!1sid!2sid!4v1712987654321" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+
+                    <div class="map-overlay">
+                        <div class="title">
+                            <i class="fas fa-map-pin"></i>
+                            Kos XYZ
+                        </div>
+                        <div class="address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Jl. Kaliurang KM 5, Sleman, Yogyakarta
+                        </div>
+                    </div>
+                </div>
+
+                <div class="map-info-grid">
+                    <div class="map-info-item">
+                        <div class="icon orange"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info">
+                            <div class="label">Alamat</div>
+                            <div class="value">Jl. Kaliurang KM 5, Sleman, Yogyakarta</div>
+                        </div>
+                    </div>
+                    <div class="map-info-item">
+                        <div class="icon blue"><i class="fas fa-phone"></i></div>
+                        <div class="info">
+                            <div class="label">Telepon</div>
+                            <div class="value">+62 812 3456 789</div>
+                        </div>
+                    </div>
+                    <div class="map-info-item">
+                        <div class="icon green"><i class="fas fa-clock"></i></div>
+                        <div class="info">
+                            <div class="label">Jam Operasional</div>
+                            <div class="value">24 Jam</div>
+                        </div>
+                    </div>
+                    <div class="map-info-item">
+                        <div class="icon yellow"><i class="fas fa-wifi"></i></div>
+                        <div class="info">
+                            <div class="label">Fasilitas</div>
+                            <div class="value">WiFi 100 Mbps, CCTV 24 Jam</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </div>
 
@@ -957,7 +1327,6 @@
         </p>
         <p style="margin-top:6px; font-size:0.9rem;">
             &copy; 2026 · Sistem Informasi Manajemen Kos &nbsp;|&nbsp;
-            <!-- ===== LINK ADMIN (Update #2) ===== -->
             <a href="<?php echo e(route('admin.login')); ?>" class="admin-link">
                 <i class="fas fa-lock"></i> Admin
             </a>
@@ -966,7 +1335,21 @@
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== DARK MODE TOGGLE (Update #8) =====
+        // ============================================================
+        // ===== 1. LOADING SCREEN =====
+        // ============================================================
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loader-wrapper');
+            if (loader) {
+                setTimeout(function() {
+                    loader.classList.add('hidden');
+                }, 500);
+            }
+        });
+
+        // ============================================================
+        // ===== 2. DARK MODE TOGGLE =====
+        // ============================================================
         function toggleTheme() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute('data-theme');
@@ -984,7 +1367,9 @@
             }
         }
 
-        // ===== LOAD DARK MODE PREFERENCE =====
+        // ============================================================
+        // ===== 3. LOAD DARK MODE PREFERENCE =====
+        // ============================================================
         (function() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
@@ -997,18 +1382,32 @@
             }
         })();
 
-        // ===== ANIMASI FADE IN (Update #1) =====
+        // ============================================================
+        // ===== 4. TYPING EFFECT =====
+        // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            fadeElements.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    el.classList.add('visible');
+            const text = "Kos XYZ Yogyakarta";
+            const typingElement = document.getElementById('typing-text');
+            if (typingElement) {
+                let i = 0;
+                function typeWriter() {
+                    if (i < text.length) {
+                        typingElement.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 80);
+                    }
                 }
-            });
+                setTimeout(typeWriter, 600);
+            }
+        });
 
-            const observer = new IntersectionObserver((entries) => {
+        // ============================================================
+        // ===== 5. REVEAL ON SCROLL =====
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
@@ -1018,11 +1417,20 @@
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
             });
-
-            fadeElements.forEach(el => observer.observe(el));
+            
+            revealElements.forEach(el => revealObserver.observe(el));
+            
+            revealElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('visible');
+                }
+            });
         });
 
-        // ===== LIGHTBOX GALERI =====
+        // ============================================================
+        // ===== 6. LIGHTBOX GALERI =====
+        // ============================================================
         let galleryData = <?php echo json_encode($galleryImages, 15, 512) ?>;
 
         function openLightbox(index) {
@@ -1046,7 +1454,6 @@
             }
         }
 
-        // Keyboard shortcut: ESC untuk close
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 const lightbox = document.getElementById('lightbox');
@@ -1057,13 +1464,14 @@
             }
         });
 
-        // ===== TOGGLE FAQ =====
+        // ============================================================
+        // ===== 7. TOGGLE FAQ =====
+        // ============================================================
         function toggleFaq(element) {
             const item = element.parentElement;
             const answer = item.querySelector('.faq-answer');
             const icon = item.querySelector('.toggle-icon');
             
-            // Tutup FAQ lain
             document.querySelectorAll('.faq-item .faq-answer').forEach(el => {
                 if (el !== answer) {
                     el.classList.remove('open');
@@ -1071,10 +1479,45 @@
                 }
             });
             
-            // Toggle FAQ yang diklik
             answer.classList.toggle('open');
             icon.classList.toggle('active');
         }
+
+        // ============================================================
+        // ===== 8. VIDEO CONTROLS =====
+        // ============================================================
+        const video = document.getElementById('heroVideo');
+        const muteBtn = document.getElementById('muteBtn');
+        const playBtn = document.getElementById('playBtn');
+
+        function toggleVideoMute() {
+            if (video) {
+                video.muted = !video.muted;
+                muteBtn.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            }
+        }
+
+        function toggleVideoPlay() {
+            if (video) {
+                if (video.paused) {
+                    video.play();
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    video.pause();
+                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (video) {
+                video.play().catch(function() {
+                    if (playBtn) {
+                        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    }
+                });
+            }
+        });
     </script>
 
 </body>
