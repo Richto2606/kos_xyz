@@ -11,15 +11,15 @@ class Penyewa extends Model
         'kamar_id', 'tanggal_mulai_sewa', 'tanggal_berakhir_sewa', 'status', 'catatan', 'foto'
     ];
 
-    // ===== INI YANG HARUS DITAMBAHKAN =====
     protected $casts = [
         'tanggal_mulai_sewa' => 'date',
         'tanggal_berakhir_sewa' => 'date',
     ];
 
+    // ===== RELASI KE KAMAR =====
     public function kamar()
     {
-        return $this->belongsTo(Kamar::class);
+        return $this->belongsTo(Kamar::class, 'kamar_id');
     }
 
     public function tagihans()

@@ -285,6 +285,278 @@
         .sejarah p { color:var(--text-secondary); font-size:1.02rem; line-height:1.7; max-width:800px; }
         .sejarah .highlight { background:#fef3c7; padding:2px 10px; border-radius:40px; font-weight:500; color:#92400e; }
 
+        /* ===== GALERI (Update #9) ===== */
+        .gallery-section {
+            margin: 40px 0;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+        }
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: #b45309;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 16px 16px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.6));
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        .gallery-item .overlay span {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .gallery-empty {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 2px dashed var(--border-color);
+        }
+        .gallery-empty i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+        }
+        .lightbox.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .lightbox img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            object-fit: contain;
+        }
+        .lightbox .close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background: rgba(255,255,255,0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox .close:hover {
+            transform: rotate(90deg);
+            background: rgba(255,255,255,0.2);
+        }
+        .lightbox .caption {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* ===== TESTIMONI ===== */
+        .testimoni-section {
+            margin: 50px 0 30px;
+        }
+        .testimoni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .testimoni-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px 26px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .testimoni-card:hover {
+            border-color: #fed7aa;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--shadow-hover);
+        }
+        .testimoni-card .stars {
+            color: #f59e0b;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .testimoni-card .quote {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 14px;
+        }
+        .testimoni-card .quote i {
+            color: #b45309;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+        .testimoni-card .profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .testimoni-card .profile .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #fef3c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #b45309;
+            flex-shrink: 0;
+        }
+        .testimoni-card .profile .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .testimoni-card .profile .info .name {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .testimoni-card .profile .info .role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-section {
+            margin: 40px 0 30px;
+        }
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            border-color: #fed7aa;
+        }
+        .faq-item .faq-question {
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+        .faq-item .faq-question:hover {
+            background: var(--bg-primary);
+        }
+        .faq-item .faq-question .q {
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .faq-item .faq-question .q .icon {
+            color: #b45309;
+            font-weight: 700;
+        }
+        .faq-item .faq-question .toggle-icon {
+            color: #b45309;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        .faq-item .faq-question .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+        .faq-item .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 24px;
+        }
+        .faq-item .faq-answer.open {
+            max-height: 300px;
+            padding: 0 24px 18px;
+        }
+        .faq-item .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
         /* ===== CTA SECTION ===== */
         .cta-section { 
             background:#0f172a; 
@@ -347,6 +619,31 @@
             transform: translateY(0);
         }
 
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .lightbox img {
+                max-width: 95%;
+                max-height: 70%;
+            }
+            .lightbox .close {
+                top: 20px;
+                right: 20px;
+                font-size: 1.8rem;
+                width: 40px;
+                height: 40px;
+            }
+            .lightbox .caption {
+                font-size: 0.9rem;
+                bottom: 20px;
+                padding: 6px 16px;
+            }
+            .testimoni-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width:700px) { 
             .navbar .container { flex-direction:column; gap:12px; } 
@@ -371,6 +668,9 @@
             <div class="nav-links">
                 <a href="#kamar">Kamar</a>
                 <a href="#fasilitas">Fasilitas</a>
+                <a href="#galeri">Galeri</a>
+                <a href="#testimoni">Testimoni</a>
+                <a href="#faq">FAQ</a>
                 <a href="#sejarah">Sejarah</a>
                 <a href="https://wa.me/628123456789" class="btn-wa"><i class="fab fa-whatsapp"></i> Chat Admin</a>
                 <!-- ===== DARK MODE TOGGLE (Update #8) ===== -->
@@ -491,6 +791,132 @@
             <div class="item"><i class="fas fa-shield-alt"></i> Keamanan 24 jam</div>
         </div>
 
+        <!-- ===== GALERI FOTO (Update #9) ===== -->
+        <section class="gallery-section fade-in" id="galeri">
+            <h2 class="section-title">
+                <i class="fas fa-images" style="color:#b45309;"></i> Galeri Kos XYZ
+                <small style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">· Suasana nyaman & asri</small>
+            </h2>
+
+            <div class="gallery-grid">
+                @php
+                    $galleryImages = [];
+                    foreach($kamars as $k) {
+                        if ($k->gambar && file_exists(storage_path('app/public/kamar/' . $k->gambar))) {
+                            $galleryImages[] = [
+                                'url' => asset('storage/kamar/' . $k->gambar),
+                                'caption' => $k->nama . ' - ' . $k->status
+                            ];
+                        }
+                    }
+                    // Ambil 6 gambar pertama
+                    $galleryImages = array_slice($galleryImages, 0, 6);
+                @endphp
+
+                @forelse($galleryImages as $index => $img)
+                <div class="gallery-item" onclick="openLightbox({{ $index }})">
+                    <img src="{{ $img['url'] }}" alt="{{ $img['caption'] }}" loading="lazy">
+                    <div class="overlay">
+                        <span><i class="fas fa-expand" style="margin-right:6px;"></i> {{ $img['caption'] }}</span>
+                    </div>
+                </div>
+                @empty
+                <div class="gallery-empty">
+                    <i class="fas fa-images"></i>
+                    <p>Belum ada gambar untuk ditampilkan</p>
+                    <p style="font-size:0.9rem;">Tambahkan gambar pada setiap kamar di dashboard admin</p>
+                </div>
+                @endforelse
+            </div>
+
+            @if(count($galleryImages) > 0)
+            <div style="text-align:center; margin-top:20px;">
+                <a href="#kamar" class="btn-wa" style="background:#b45309; text-decoration:none; padding:10px 28px; border-radius:40px; color:white; font-weight:600; display:inline-flex; align-items:center; gap:8px; border:none;">
+                    <i class="fas fa-images"></i> Lihat Semua Kamar
+                </a>
+            </div>
+            @endif
+        </section>
+
+        <!-- ===== LIGHTBOX ===== -->
+        <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+            <span class="close" onclick="closeLightbox(event)">&times;</span>
+            <img id="lightboxImg" src="" alt="">
+            <div class="caption" id="lightboxCaption"></div>
+        </div>
+
+        <!-- ===== TESTIMONI PENYEWA ===== -->
+        <section class="testimoni-section fade-in" id="testimoni">
+            <h2 class="section-title">
+                <i class="fas fa-comment-dots" style="color:#b45309;"></i> Testimoni Penyewa
+                <small style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">· Apa kata mereka</small>
+            </h2>
+
+            <div class="testimoni-grid">
+                @forelse($testimonials as $testi)
+                <div class="testimoni-card">
+                    <div class="stars">
+                        @for($i = 0; $i < 5; $i++)
+                            <i class="fas fa-star"></i>
+                        @endfor
+                    </div>
+                    <div class="quote">
+                        <i class="fas fa-quote-left"></i>
+                        {{ $testi['quote'] }}
+                        <i class="fas fa-quote-right" style="float:right;"></i>
+                    </div>
+                    <div class="profile">
+                        <div class="avatar">
+                            @if(isset($testi['foto']) && $testi['foto'])
+                                <img src="{{ asset('storage/penyewa/' . $testi['foto']) }}" alt="{{ $testi['name'] }}">
+                            @else
+                                {{ strtoupper(substr($testi['name'], 0, 1)) }}
+                            @endif
+                        </div>
+                        <div class="info">
+                            <div class="name">{{ $testi['name'] }}</div>
+                            <div class="role">{{ $testi['role'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--text-muted); background:var(--bg-card); border-radius:20px; border:2px dashed var(--border-color);">
+                    <i class="fas fa-comment-slash" style="font-size:2rem; display:block; margin-bottom:10px; color:var(--text-muted);"></i>
+                    <p>Belum ada testimoni</p>
+                </div>
+                @endforelse
+            </div>
+        </section>
+
+        <!-- ===== FAQ ===== -->
+        <section class="faq-section fade-in" id="faq">
+            <h2 class="section-title">
+                <i class="fas fa-circle-question" style="color:#b45309;"></i> Pertanyaan Umum (FAQ)
+                <small style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">· Yang sering ditanyakan</small>
+            </h2>
+
+            <div class="faq-list">
+                @forelse($faqs as $faq)
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span class="q">
+                            <span class="icon">Q.</span> {{ $faq['question'] }}
+                        </span>
+                        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>A.</strong> {{ $faq['answer'] }}</p>
+                    </div>
+                </div>
+                @empty
+                <div style="text-align:center; padding:30px; color:var(--text-muted); background:var(--bg-card); border-radius:16px; border:2px dashed var(--border-color);">
+                    <i class="fas fa-circle-question" style="font-size:2rem; display:block; margin-bottom:10px; color:var(--text-muted);"></i>
+                    <p>Belum ada FAQ</p>
+                </div>
+                @endforelse
+            </div>
+        </section>
+
         <!-- ===== SEJARAH ===== -->
         <div class="sejarah fade-in" id="sejarah">
             <h3><i class="fas fa-landmark"></i> Sejarah Kos XYZ</h3>
@@ -542,10 +968,8 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
             
-            // Simpan preferensi di localStorage
             localStorage.setItem('theme', newTheme);
             
-            // Update tombol
             const toggleBtn = document.getElementById('themeToggle');
             const label = document.getElementById('themeLabel');
             if (newTheme === 'dark') {
@@ -560,7 +984,6 @@
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
                 document.documentElement.setAttribute('data-theme', savedTheme);
-                // Update tombol
                 const toggleBtn = document.getElementById('themeToggle');
                 const label = document.getElementById('themeLabel');
                 if (savedTheme === 'dark') {
@@ -573,7 +996,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const fadeElements = document.querySelectorAll('.fade-in');
             
-            // Jika sudah terlihat di awal, langsung tampilkan
             fadeElements.forEach(el => {
                 const rect = el.getBoundingClientRect();
                 if (rect.top < window.innerHeight) {
@@ -594,6 +1016,60 @@
 
             fadeElements.forEach(el => observer.observe(el));
         });
+
+        // ===== LIGHTBOX GALERI =====
+        let galleryData = @json($galleryImages);
+
+        function openLightbox(index) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            const caption = document.getElementById('lightboxCaption');
+            
+            if (galleryData[index]) {
+                img.src = galleryData[index].url;
+                caption.textContent = galleryData[index].caption;
+                lightbox.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeLightbox(event) {
+            const lightbox = document.getElementById('lightbox');
+            if (event.target === lightbox || event.target.classList.contains('close')) {
+                lightbox.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Keyboard shortcut: ESC untuk close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const lightbox = document.getElementById('lightbox');
+                if (lightbox.classList.contains('show')) {
+                    lightbox.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+
+        // ===== TOGGLE FAQ =====
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            const icon = item.querySelector('.toggle-icon');
+            
+            // Tutup FAQ lain
+            document.querySelectorAll('.faq-item .faq-answer').forEach(el => {
+                if (el !== answer) {
+                    el.classList.remove('open');
+                    el.parentElement.querySelector('.toggle-icon').classList.remove('active');
+                }
+            });
+            
+            // Toggle FAQ yang diklik
+            answer.classList.toggle('open');
+            icon.classList.toggle('active');
+        }
     </script>
 
 </body>

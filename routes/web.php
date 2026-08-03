@@ -6,25 +6,30 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\ExportController; // <- TAMBAHKAN INI
 use Illuminate\Support\Facades\Route;
 
-// ============= ROUTE PUBLIK =============
+// ============================================================
+// ============= ROUTE PUBLIK =================================
+// ============================================================
 Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/kamar', [PublicController::class, 'kamar'])->name('public.kamar');
-
-// ===== TAMBAHKAN ROUTE INI UNTUK DETAIL KAMAR =====
 Route::get('/kamar/{id}', [PublicController::class, 'detailKamar'])->name('public.kamar.detail');
-// ===== END TAMBAHAN =====
 
-// ============= ROUTE ADMIN =============
+// ============================================================
+// ============= ROUTE ADMIN ===================================
+// ============================================================
 Route::prefix('admin')->name('admin.')->group(function () {
-    // Login (tanpa middleware)
+    
+    // ----- LOGIN (tanpa middleware) -----
     Route::get('/login', [AdminController::class, 'loginForm'])->name('login');
     Route::post('/login', [AdminController::class, 'login'])->name('login.post');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 
-    // Dashboard & CRUD (dengan middleware)
+    // ----- DASHBOARD & CRUD (dengan middleware) -----
     Route::middleware(['admin.auth'])->group(function () {
+        
+        // Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // CRUD Kamar
@@ -42,33 +47,31 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/notifikasi/wa', [AdminController::class, 'kirimWA'])->name('notifikasi.wa');
         Route::post('/notifikasi/email', [AdminController::class, 'kirimEmail'])->name('notifikasi.email');
         Route::post('/notifikasi/reminder', [AdminController::class, 'kirimReminder'])->name('notifikasi.reminder');
-      Route::get('/test-dashboard-simple', function () {
-    try {
-        $totalKamar = App\Models\Kamar::count();
-        return view('admin.dashboard-test', ['totalKamar' => $totalKamar]);
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-})->name('test.dashboard');
+
+        // ----- EXPORT (di dalam middleware agar hanya admin yang bisa akses) -----
+        Route::get('/export/pdf', [ExportController::class, 'exportPDF'])->name('export.pdf');
+        Route::get('/export/excel', [ExportController::class, 'exportExcel'])->name('export.excel');
     });
 });
 
-// ============= ROUTE TEST =============
+// ============================================================
+// ============= ROUTE TEST (UNTUK DEBUG) =====================
+// ============================================================
+
+// Test sederhana - cek Laravel berfungsi
 Route::get('/test-simple', function () {
     return '<h1 style="color:green;">✅ Laravel berfungsi!</h1>';
 });
 
-// ============= ROUTE TEST DASHBOARD =============
+// Test dashboard direct - cek data JSON
 Route::get('/test-dashboard-direct', function () {
     try {
-        // Ambil data dari database
         $kamars = App\Models\Kamar::all();
         $totalKamar = $kamars->count();
         $tersedia = $kamars->where('status', 'Tersedia')->count();
         $terisi = $kamars->where('status', 'Penuh')->count();
         $maintenance = $kamars->where('status', 'Maintenance')->count();
         
-        // Data dummy untuk test
         $data = [
             'kamars' => $kamars,
             'totalKamar' => $totalKamar,
@@ -82,7 +85,6 @@ Route::get('/test-dashboard-direct', function () {
             'pendapatanTahunan' => 0,
         ];
         
-        // Tampilkan data dalam bentuk JSON dulu untuk test
         return response()->json([
             'status' => 'success',
             'data' => $data,
@@ -99,7 +101,20 @@ Route::get('/test-dashboard-direct', function () {
     }
 });
 
+// Test layout - cek apakah layout admin berfungsi
 Route::get('/test-layout', function () {
     $totalKamar = App\Models\Kamar::count();
     return view('admin.dashboard-test-layout', ['totalKamar' => $totalKamar]);
 });
+
+// Test dashboard simple - cek view dashboard
+Route::get('/test-dashboard-simple', function () {
+    try {
+        $totalKamar = App\Models\Kamar::count();
+        return view('admin.dashboard-test', ['totalKamar' => $totalKamar]);
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+})->name('test.dashboard');
+
+Route::get('/test-excel', [ExportController::class, 'exportExcelTest']);
